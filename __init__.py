@@ -67,8 +67,6 @@ class KeyLab_Essential_mk3(ControlSurface):
 
     def __init__(self, *a, **k):
         (super().__init__)(Specification, *a, **k)
-        log("KeyLab_Essential_mk3: __init__")
-        log(Specification)
 
     def setup(self):
         super().setup()
