@@ -21,7 +21,7 @@ from .elements import Elements
 from .mappings import create_mappings
 from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
-from .Log import log
+
 
 def get_capabilities():
     return {CONTROLLER_ID_KEY: (controller_id(vendor_id=7285,
@@ -37,7 +37,6 @@ def get_capabilities():
                  inport(props=[NOTES_CC]),
                  outport(props=[NOTES_CC, SCRIPT]),
                  outport(props=[NOTES_CC])]}
-
 
 
 def create_instance(c_instance):
