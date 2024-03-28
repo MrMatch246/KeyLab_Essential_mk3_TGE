@@ -21,6 +21,7 @@ from .elements import Elements
 from .mappings import create_mappings
 from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
+from .modSettings import ENABLE_AUTO_ARM
 
 
 def get_capabilities():
@@ -50,6 +51,7 @@ class Specification(ControlSurfaceSpecification):
     num_scenes = 2
     link_session_ring_to_track_selection = True
     link_session_ring_to_scene_selection = True
+    include_auto_arming = True
     identity_response_id_bytes = (0, 32, 107, 2, 0, 5)
     create_mappings_function = create_mappings
     hello_messages = (CONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE)
@@ -78,5 +80,6 @@ class KeyLab_Essential_mk3(ControlSurface):
                 encoder.realign_value()
 
             self.elements.encoder_9.realign_value()
+            self.set_can_auto_arm(ENABLE_AUTO_ARM)
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/__init__.pyc
