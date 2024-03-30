@@ -1,8 +1,18 @@
-Modified the Scripts for the Arturia KeyLab Essential Mk3 so that it auto arms a selected Track (doesnt work if any other track is manually armed) 
-Fader 9 now controls the Master Volume instead of Current Track Volume 
-Knob 9 now controls the Cue Volume. 
+Modified the Scripts for the Arturia KeyLab Essential Mk3 
 
-arm and master mod can be toggled independently 
+Current Features (You can choose which to use):
+
+- Fader 9 controls Master(and knob 9 controls cue volume) instead of current track volume and pan
+
+- Enabled Auto Arm
+
+- Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:
+
+- TAP + Rewind / FastForward = previous/next device in chain
+
+- TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
+
+(TAP/Shift can be used as either both, only Shift mode or only TAP mode)
 
 
 Install:
