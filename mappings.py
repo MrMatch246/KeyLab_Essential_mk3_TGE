@@ -7,8 +7,9 @@
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-from .modSettings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, \
-    TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON, CONTEXT_1_WITH_SHIFT_IS_SOLO
+from .Settings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, \
+    TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON, CONTEXT_1_WITH_SHIFT_IS_SOLO, \
+    PADS_MUTE_SOLO
 
 
 def create_mappings(_):
@@ -43,8 +44,13 @@ def create_mappings(_):
         mixer = dict(target_track_arm_button="context_button_1",
                      target_track_volume_control="fader_9",
                      target_track_pan_control="encoder_9")
+
     if TAP_BUTTON_IS_SHIFT_BUTTON and CONTEXT_1_WITH_SHIFT_IS_SOLO:
         mixer["target_track_solo_button"] = "target_track_solo_button"
+
+    if TAP_BUTTON_IS_SHIFT_BUTTON and PADS_MUTE_SOLO:
+        mixer["mute_buttons"] = "pad_bank_a_shifted"
+        mixer["solo_buttons"] = "pad_bank_b_shifted"
 
     mappings["Mixer"] = mixer
     mappings["Session"] = dict(
@@ -60,8 +66,10 @@ def create_mappings(_):
                    pan_controls="encoders", bank_toggle_button="part_button"))
 
     if TAP_BUTTON_IS_SHIFT_BUTTON:
-        mappings["Continuous_Control_Modes"]["device"]["prev_button"] = "previous_device_button"
-        mappings["Continuous_Control_Modes"]["device"]["next_button"] = "next_device_button"
+        mappings["Continuous_Control_Modes"]["device"][
+            "prev_button"] = "previous_device_button"
+        mappings["Continuous_Control_Modes"]["device"][
+            "next_button"] = "next_device_button"
 
     return mappings
 

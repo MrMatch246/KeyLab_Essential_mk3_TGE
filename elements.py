@@ -8,12 +8,12 @@
 from __future__ import absolute_import, print_function, unicode_literals
 from functools import partial
 from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase, MapMode, create_button, create_sysex_sending_button
-from ableton.v3.control_surface.elements import CachingSendMessageGenerator, DisplayLineElement, EncoderElement
+from ableton.v3.control_surface.elements import CachingSendMessageGenerator, DisplayLineElement, EncoderElement, ButtonMatrixElement
+
 from MiniLab_3.encoder import RealigningEncoderMixin
 from . import midi
 from .display import Line1Text, Line2Text
-from .modSettings import TAP_BUTTON_IS_SHIFT_BUTTON , CONTEXT_1_WITH_SHIFT_IS_SOLO
-
+from .Settings import TAP_BUTTON_IS_SHIFT_BUTTON , CONTEXT_1_WITH_SHIFT_IS_SOLO,PADS_MUTE_SOLO
 def create_rgb_button(identifier, name=None, **k):
     return create_sysex_sending_button(
  identifier,
@@ -84,6 +84,15 @@ class Elements(ElementsBase):
         self.add_matrix([
             range(44, 52)],
             "Pad_Bank_B", element_factory=create_rgb_pad, channels=10)
+        if TAP_BUTTON_IS_SHIFT_BUTTON and PADS_MUTE_SOLO:
+            #reorder so that pad 5 is the first button
+            row=[self.pad_bank_b._orig_buttons[0][i] for i in [4,5,6,7,0,1,2,3]]
+            pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
+            self.add_modified_control(control=(self.pad_bank_a),modifier=(self.shift_button),name="pad_bank_a_shifted")
+            self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.shift_button),name="pad_bank_b_shifted")
+
+
+
         self.add_element("Encoder_9", RealigningEncoderElement, 104)
         self.add_encoder(113, "Fader_9")
         self.add_encoder(116, "Display_Encoder", map_mode=(MapMode.LinearBinaryOffset))

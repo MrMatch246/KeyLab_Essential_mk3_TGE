@@ -12,6 +12,10 @@ Current Features (You can choose which to use):
 
 - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
 
+- TAB + PAD Bank A = Mute Tracks
+
+- TAB + PAD Bank B = Solo Tracks
+
 (TAP/Shift can be used as either both, only Shift mode or only TAP mode)
 
 

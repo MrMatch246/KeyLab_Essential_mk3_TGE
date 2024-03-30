@@ -25,7 +25,7 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
     REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
 
-from .modSettings import ENABLE_AUTO_ARM,TAP_BUTTON_IS_SHIFT_BUTTON
+from .Settings import ENABLE_AUTO_ARM,TAP_BUTTON_IS_SHIFT_BUTTON
 if TAP_BUTTON_IS_SHIFT_BUTTON:
     from .devices import DeviceControlsComponent as DeviceComponent
 else:
