@@ -12,6 +12,7 @@ from ableton.v3.control_surface.elements import CachingSendMessageGenerator, Dis
 from MiniLab_3.encoder import RealigningEncoderMixin
 from . import midi
 from .display import Line1Text, Line2Text
+from .modSettings import TAP_BUTTON_IS_SHIFT_BUTTON
 
 def create_rgb_button(identifier, name=None, **k):
     return create_sysex_sending_button(
@@ -44,10 +45,20 @@ class Elements(ElementsBase):
         self.add_button(20, "Stop_Button")
         self.add_button(21, "Play_Button")
         self.add_button(22, "Record_Button")
-        self.add_button(23, "Tap_Button")
+
+        if TAP_BUTTON_IS_SHIFT_BUTTON:
+            self.add_modifier_button(23, "Shift_Button")
+        else:
+            self.add_button(23, "Tap_Button")
+
         self.add_button(24, "Loop_Button")
         self.add_button(25, "Rewind_Button")
         self.add_button(26, "Fastforward_Button")
+
+        if TAP_BUTTON_IS_SHIFT_BUTTON:
+            self.add_modified_control(control=(self.rewind_button),modifier=(self.shift_button),name="previous_device_button")
+            self.add_modified_control(control=(self.fastforward_button),modifier=(self.shift_button),name="next_device_button")
+
         self.add_button(27, "Metronome_Button")
         self.add_button(40, "Save_Button")
         self.add_button(41, "Punch_Button")

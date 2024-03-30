@@ -1,15 +1,18 @@
-# decompyle3 version 3.9.1
-# Python bytecode version base 3.7.0 (3394)
-# Decompiled from: Python 3.8.10 (default, Nov 22 2023, 10:22:35) 
-# [GCC 9.4.0]
-# Embedded file name: ..\..\..\output\Live\win_64_static\Release\python-bundle\MIDI Remote Scripts\KeyLab_Essential_mk3\device_bank_toggle.py
-# Compiled at: 2024-01-31 17:08:32
-# Size of source mod 2**32: 1574 bytes
 from __future__ import absolute_import, print_function, unicode_literals
+
 from ableton.v3.base import listenable_property
 from ableton.v3.control_surface.components import DeviceBankNavigationComponent
+from ableton.v3.control_surface.components import DeviceComponent as DeviceComponentBase
+from ableton.v3.control_surface.components import SimpleDeviceNavigationComponent
 from ableton.v3.control_surface.controls import ButtonControl
 from ableton.v3.control_surface.display import Renderable
+
+
+class DeviceControlsComponent(DeviceComponentBase,
+                              SimpleDeviceNavigationComponent):
+    def __init__(self, *a, **k):
+        super(DeviceControlsComponent, self).__init__(*a, **k)
+
 
 class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
     bank_index = listenable_property.managed(0)
@@ -31,5 +34,3 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
         self.bank_toggle_button.enabled = can_bank
         if can_bank:
             self.bank_toggle_button.color = "Banking.PageOne" if self._bank_provider.index == 0 else "Banking.PageTwo"
-
-# okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/device_bank_toggle.pyc

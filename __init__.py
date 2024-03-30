@@ -7,22 +7,29 @@
 # Size of source mod 2**32: 2991 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-import sys
 from functools import partial
-from ableton.v3.base import listens
-from ableton.v3.control_surface import ControlSurface, ControlSurfaceSpecification, create_skin
-from ableton.v3.control_surface.capabilities import CONTROLLER_ID_KEY, NOTES_CC, PORTS_KEY, SCRIPT, controller_id, inport, outport
-from ableton.v3.control_surface.components import DeviceComponent
+
 from MiniLab_3 import DrumGroupComponent
+from ableton.v3.base import listens
+from ableton.v3.control_surface import ControlSurface, \
+    ControlSurfaceSpecification, create_skin
+from ableton.v3.control_surface.capabilities import CONTROLLER_ID_KEY, NOTES_CC, \
+    PORTS_KEY, SCRIPT, controller_id, inport, outport
+
 from .colors import Rgb, Skin
-from .device_bank_toggle import DeviceBankToggleComponent
+from .devices import DeviceBankToggleComponent
 from .display import display_specification
 from .elements import Elements
 from .mappings import create_mappings
-from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE
+from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
+    REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
-from .modSettings import ENABLE_AUTO_ARM
 
+from .modSettings import ENABLE_AUTO_ARM,TAP_BUTTON_IS_SHIFT_BUTTON
+if TAP_BUTTON_IS_SHIFT_BUTTON:
+    from .devices import DeviceControlsComponent as DeviceComponent
+else:
+    from ableton.v3.control_surface.components import DeviceComponent as DeviceComponent
 
 def get_capabilities():
     return {CONTROLLER_ID_KEY: (controller_id(vendor_id=7285,

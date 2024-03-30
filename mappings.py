@@ -6,18 +6,27 @@
 # Compiled at: 2024-01-31 17:08:32
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
-from .modSettings import FADER_9_IS_MASTER
+
+from .modSettings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON
+
 
 def create_mappings(_):
     mappings = {}
+    mappings["Modifier_Background"] = dict(shift="shift_button")
     mappings["Transport"] = dict(play_button="play_button",
                                  stop_button="stop_button",
                                  metronome_button="metronome_button",
                                  loop_button="loop_button",
-                                 tap_tempo_button="tap_button",
                                  capture_midi_button="save_button",
                                  rewind_button="rewind_button",
                                  fastforward_button="fastforward_button")
+
+    if TAP_BUTTON_IS_SHIFT_BUTTON:
+        if TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON:
+            mappings["Transport"]["tap_tempo_button"] = "shift_button"
+    else:
+        mappings["Transport"]["tap_tempo_button"] = "tap_button"
+
     mappings["View_Based_Recording"] = dict(record_button="record_button")
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
                                  redo_button="redo_button")
@@ -26,13 +35,14 @@ def create_mappings(_):
                                     next_track_button="context_button_3",
                                     scene_encoder="display_encoder")
     if FADER_9_IS_MASTER:
-        mappings["Mixer"] = dict(target_track_arm_button="context_button_1",
-                                 master_track_volume_control="fader_9",
-                                 prehear_volume_control="encoder_9")
+        mixer = dict(target_track_arm_button="context_button_1",
+                     master_track_volume_control="fader_9",
+                     prehear_volume_control="encoder_9")
     else:
-        mappings["Mixer"] = dict(target_track_arm_button="context_button_1",
-                                 target_track_volume_control="fader_9",
-                                 target_track_pan_control="encoder_9")
+        mixer = dict(target_track_arm_button="context_button_1",
+                     target_track_volume_control="fader_9",
+                     target_track_pan_control="encoder_9")
+    mappings["Mixer"] = mixer
     mappings["Session"] = dict(
         selected_scene_launch_button="display_encoder_button",
         clip_launch_buttons="pad_bank_a")
@@ -44,6 +54,11 @@ def create_mappings(_):
                                                           bank_toggle_button="part_button"),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders", bank_toggle_button="part_button"))
+
+    if TAP_BUTTON_IS_SHIFT_BUTTON:
+        mappings["Continuous_Control_Modes"]["device"]["prev_button"] = "previous_device_button"
+        mappings["Continuous_Control_Modes"]["device"]["next_button"] = "next_device_button"
+
     return mappings
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/mappings.pyc
