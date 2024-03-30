@@ -7,7 +7,8 @@
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-from .modSettings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON
+from .modSettings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, \
+    TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON, CONTEXT_1_WITH_SHIFT_IS_SOLO
 
 
 def create_mappings(_):
@@ -42,6 +43,9 @@ def create_mappings(_):
         mixer = dict(target_track_arm_button="context_button_1",
                      target_track_volume_control="fader_9",
                      target_track_pan_control="encoder_9")
+    if TAP_BUTTON_IS_SHIFT_BUTTON and CONTEXT_1_WITH_SHIFT_IS_SOLO:
+        mixer["target_track_solo_button"] = "target_track_solo_button"
+
     mappings["Mixer"] = mixer
     mappings["Session"] = dict(
         selected_scene_launch_button="display_encoder_button",

@@ -12,7 +12,7 @@ from ableton.v3.control_surface.elements import CachingSendMessageGenerator, Dis
 from MiniLab_3.encoder import RealigningEncoderMixin
 from . import midi
 from .display import Line1Text, Line2Text
-from .modSettings import TAP_BUTTON_IS_SHIFT_BUTTON
+from .modSettings import TAP_BUTTON_IS_SHIFT_BUTTON , CONTEXT_1_WITH_SHIFT_IS_SOLO
 
 def create_rgb_button(identifier, name=None, **k):
     return create_sysex_sending_button(
@@ -66,59 +66,63 @@ class Elements(ElementsBase):
         self.add_button(43, "Redo_Button")
         self.add_button(44, "Context_Button_0")
         self.add_button(45, "Context_Button_1")
+
+        if CONTEXT_1_WITH_SHIFT_IS_SOLO and TAP_BUTTON_IS_SHIFT_BUTTON:
+            self.add_modified_control(control=(self.context_button_1),modifier=(self.shift_button),name="target_track_solo_button")
+
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")
         self.add_button(117, "Display_Encoder_Button")
         self.add_button(118, "Bank_Button")
         self.add_button(119, "Part_Button")
         self.add_matrix([
-         [
-          40, 41, 42, 43], [36, 37, 38, 39]],
-          "Pad_Bank_A",
-          element_factory=create_rgb_pad,
-          channels=10)
+            [
+                40, 41, 42, 43], [36, 37, 38, 39]],
+            "Pad_Bank_A",
+            element_factory=create_rgb_pad,
+            channels=10)
         self.add_matrix([
-         range(44, 52)],
-          "Pad_Bank_B", element_factory=create_rgb_pad, channels=10)
+            range(44, 52)],
+            "Pad_Bank_B", element_factory=create_rgb_pad, channels=10)
         self.add_element("Encoder_9", RealigningEncoderElement, 104)
         self.add_encoder(113, "Fader_9")
         self.add_encoder(116, "Display_Encoder", map_mode=(MapMode.LinearBinaryOffset))
         self.add_matrix([
-         list(range(96, 104)) + list(range(105, 113))],
-          "Continuous_Controls",
-          element_factory=RealigningEncoderElement)
+            list(range(96, 104)) + list(range(105, 113))],
+            "Continuous_Controls",
+            element_factory=RealigningEncoderElement)
         self.add_submatrix((self.continuous_controls), "Encoders", columns=(0, 8))
         self.add_submatrix((self.continuous_controls), "Faders", columns=(8, 16))
         self.add_sysex_element(midi.PROGRAM_HEADER, "Program_Command")
         self.add_sysex_element((midi.DISPLAY_HEADER),
-          "Display_Full_Screen_Command",
-          send_message_generator=(CachingSendMessageGenerator(midi.make_full_screen_message)),
-          optimized=True)
+                               "Display_Full_Screen_Command",
+                               send_message_generator=(CachingSendMessageGenerator(midi.make_full_screen_message)),
+                               optimized=True)
         self.display_line_1 = DisplayLineElement(name="Display_Line_1",
-          display_fn=(lambda message: self.display_full_screen_command.send_value(line1=message)),
-          default_formatting=(Line1Text()))
+                                                 display_fn=(lambda message: self.display_full_screen_command.send_value(line1=message)),
+                                                 default_formatting=(Line1Text()))
         self.display_line_2 = DisplayLineElement(name="Display_Line_2",
-          display_fn=(lambda message: self.display_full_screen_command.send_value(line2=message)),
-          default_formatting=(Line2Text()))
+                                                 display_fn=(lambda message: self.display_full_screen_command.send_value(line2=message)),
+                                                 default_formatting=(Line2Text()))
         self.add_sysex_element((midi.DISPLAY_HEADER + (1, )),
-          "Display_Header_Command",
-          send_message_generator=(lambda text: midi.make_full_screen_message(1, (0, ), text)),
-          optimized=True)
+                               "Display_Header_Command",
+                               send_message_generator=(lambda text: midi.make_full_screen_message(1, (0, ), text)),
+                               optimized=True)
         self.add_sysex_element((midi.DISPLAY_HEADER + (3, )),
-          "Display_Footer_Command",
-          send_message_generator=(lambda icon1, icon2, icon3, icon4: midi.DISPLAY_HEADER + (3, ) + (16, icon1.state.value, 0, 18, icon1.type.value, 0) + (32, icon2.state.value, 0, 34, icon2.type.value, 0) + (48, icon3.state.value, 0, 50, icon3.type.value, 0) + (64, icon4.state.value, 0, 66, icon4.type.value, 0) + (midi.SYSEX_END,)),
-          optimized=True)
+                               "Display_Footer_Command",
+                               send_message_generator=(lambda icon1, icon2, icon3, icon4: midi.DISPLAY_HEADER + (3, ) + (16, icon1.state.value, 0, 18, icon1.type.value, 0) + (32, icon2.state.value, 0, 34, icon2.type.value, 0) + (48, icon3.state.value, 0, 50, icon3.type.value, 0) + (64, icon4.state.value, 0, 66, icon4.type.value, 0) + (midi.SYSEX_END,)),
+                               optimized=True)
         self.add_sysex_element((midi.DISPLAY_HEADER + (23, )),
-          "Display_Popup_Command",
-          send_message_generator=(partial(midi.make_full_screen_message, 23)),
-          optimized=True)
+                               "Display_Popup_Command",
+                               send_message_generator=(partial(midi.make_full_screen_message, 23)),
+                               optimized=True)
         self.display_parameter_commands = []
         for (i, element) in enumerate(self.continuous_controls_raw + [self.encoder_9, self.fader_9]):
             self.add_sysex_element((midi.DISPLAY_HEADER + (32, i)),
-              ("Display_Parameter_Command_{}".format(i)),
-              send_message_generator=partial((midi.make_full_screen_message),
-              line3=(element.original_identifier())),
-              optimized=True)
+                                   ("Display_Parameter_Command_{}".format(i)),
+                                   send_message_generator=partial((midi.make_full_screen_message),
+                                                                  line3=(element.original_identifier())),
+                                   optimized=True)
             self.display_parameter_commands.append(getattr(self, "display_parameter_command_{}".format(i)))
 
     def add_button(self, identifier, name, **k):
