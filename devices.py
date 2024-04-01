@@ -4,10 +4,10 @@ from ableton.v3.base import listenable_property
 from ableton.v3.control_surface.components import DeviceBankNavigationComponent
 from ableton.v3.control_surface.components import DeviceComponent as DeviceComponentBase
 from ableton.v3.control_surface.components import SimpleDeviceNavigationComponent
-from ableton.v3.control_surface.controls import ButtonControl
+from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl
 from ableton.v3.control_surface.display import Renderable
 from .PythonBridge import dispatch_hotkey
-from .Settings import PY_TOGGLE_WRENCH, IS_MAC
+from .Settings import PY_TOGGLE_WRENCH, IS_MAC,ENABLE_ROUNDTRIP_BANKING
 
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
@@ -36,14 +36,45 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
     bank_index = listenable_property.managed(0)
     has_changed_bank_index = listenable_property.managed(False)
     bank_toggle_button = ButtonControl()
+    scroll_encoder = StepEncoderControl(num_steps=64)
 
     def set_bank_toggle_button(self, button):
         self.bank_toggle_button.set_control_element(button)
 
     @bank_toggle_button.pressed
     def bank_toggle_button(self, _):
-        self._bank_provider.index = 2 if self._bank_provider.index == 0 else 0
+        if True:
+            self._bank_provider.index = 1 if self._bank_provider.index == 0 else 0
+            self.has_changed_bank_index = True
+    @scroll_encoder.value
+    def scroll_encoder(self, value, _):
+        if self._bank_provider.bank_count() > 1:
+            if ENABLE_ROUNDTRIP_BANKING:
+                if value < 0:
+                    self.scroll_down()
+                else:
+                    self.scroll_up()
+            else:
+                if value > 0 and self.can_scroll_up():
+                    self.scroll_up()
+                if value < 0 and self.can_scroll_down():
+                    self.scroll_down()
+
+    def scroll_up(self):
+        new_index = self._bank_provider.index + 1
+        if new_index >= self._bank_provider.bank_count():
+            new_index = 0
+        self._bank_provider.index = new_index
         self.has_changed_bank_index = True
+        self._notify_bank_name()
+
+    def scroll_down(self):
+        new_index = self._bank_provider.index - 1
+        if new_index < 0:
+            new_index = self._bank_provider.bank_count() - 1
+        self._bank_provider.index = new_index
+        self.has_changed_bank_index = True
+        self._notify_bank_name()
 
     def update(self):
         super().update()

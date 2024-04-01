@@ -9,7 +9,8 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from .Settings import FADER_9_IS_MASTER, TAP_SHIFT_MODE, \
     TAP_DUAL_MODE, TAP_CONTEXT_1_IS_SOLO, \
-    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION , PY_SAVE_PROJECT
+    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION, PY_SAVE_PROJECT, \
+    ENCODER_DEVICE_BANK
 
 
 def create_mappings(_):
@@ -61,10 +62,18 @@ def create_mappings(_):
         support_momentary_mode_cycling=False,
         cycle_mode_button="context_button_0", device=dict(component="Device",
                                                           parameter_controls="continuous_controls",
-                                                          bank_toggle_button="part_button",
-                                                          wrench_toggle_button="wrench_toggle_button"),
+                                                          wrench_toggle_button="wrench_toggle_button",
+                                                          bank_scroll_encoder="display_encoder_button_part_shifted"),
         mixer=dict(component="Mixer", volume_controls="faders",
-                   pan_controls="encoders", bank_toggle_button="part_button"))
+                   pan_controls="encoders",
+                   bank_toggle_button="part_button"
+
+                   ))
+    if ENCODER_DEVICE_BANK:
+        mappings["Continuous_Control_Modes"]["device"]["bank_scroll_encoder"] = "display_encoder_button_part_shifted"
+    else:
+        mappings["Continuous_Control_Modes"]["device"]["bank_toggle_button"] = "part_button"
+
 
     if TAP_DEVICE_NAVIGATION:
         mappings["Continuous_Control_Modes"]["device"][

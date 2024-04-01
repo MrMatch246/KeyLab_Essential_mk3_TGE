@@ -80,8 +80,11 @@ class Elements(ElementsBase):
         self.add_button(47, "Context_Button_3")
         self.add_button(117, "Display_Encoder_Button")
         self.add_button(118, "Bank_Button")
-        self.add_button(119, "Part_Button")
 
+        if ENCODER_DEVICE_BANK:
+            self.add_modifier_button(119, "Part_Button")
+        else:
+            self.add_button(119, "Part_Button")
 
         if PY_TOGGLE_WRENCH:
             self.add_modified_control(control=(self.part_button),modifier=(self.tap_button),name="wrench_toggle_button")
@@ -109,6 +112,10 @@ class Elements(ElementsBase):
         self.add_element("Encoder_9", RealigningEncoderElement, 104)
         self.add_encoder(113, "Fader_9")
         self.add_encoder(116, "Display_Encoder", map_mode=(MapMode.LinearBinaryOffset))
+
+        if ENCODER_DEVICE_BANK:
+            self.add_modified_control(control=(self.display_encoder),modifier=(self.part_button),name="display_encoder_button_part_shifted")
+
         self.add_matrix([
             list(range(96, 104)) + list(range(105, 113))],
             "Continuous_Controls",

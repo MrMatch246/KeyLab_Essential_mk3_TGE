@@ -44,8 +44,10 @@ PY_TOGGLE_WRENCH = True
 # Save your Project! with the Tap + Save Button!!!
 PY_SAVE_PROJECT = True
 
-
-
+#Use The Main Encoder + keeping Part pressed to scroll through the device parameter Banks
+ENCODER_DEVICE_BANK = True
+#Set this to false if you dont want the encoder to jump to the first bank after the last bank
+ENABLE_ROUNDTRIP_BANKING = True
 
 
 
