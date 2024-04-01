@@ -6,12 +6,30 @@ from ableton.v3.control_surface.components import DeviceComponent as DeviceCompo
 from ableton.v3.control_surface.components import SimpleDeviceNavigationComponent
 from ableton.v3.control_surface.controls import ButtonControl
 from ableton.v3.control_surface.display import Renderable
-
+from .PythonBridge import dispatch_hotkey
+from .Settings import PY_TOGGLE_WRENCH, IS_MAC
 
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
+    wrench_toggle_button = ButtonControl()
+
     def __init__(self, *a, **k):
         super(DeviceControlsComponent, self).__init__(*a, **k)
+
+    def set_wrench_toggle_button(self, button):
+        self.wrench_toggle_button.set_control_element(button)
+
+    @wrench_toggle_button.pressed
+    def wrench_toggle_button(self, _):
+        self._toggle_device_view()
+
+    def _toggle_device_view(self):
+        if PY_TOGGLE_WRENCH:
+            if IS_MAC:
+                dispatch_hotkey("command+alt+p")
+            else:
+                dispatch_hotkey("ctrl+alt+p")
+
 
 
 class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):

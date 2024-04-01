@@ -9,11 +9,13 @@ from __future__ import absolute_import, print_function, unicode_literals
 from functools import partial
 from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase, MapMode, create_button, create_sysex_sending_button
 from ableton.v3.control_surface.elements import CachingSendMessageGenerator, DisplayLineElement, EncoderElement, ButtonMatrixElement
-
 from MiniLab_3.encoder import RealigningEncoderMixin
 from . import midi
 from .display import Line1Text, Line2Text
-from .Settings import TAP_BUTTON_IS_SHIFT_BUTTON , CONTEXT_1_WITH_SHIFT_IS_SOLO,PADS_MUTE_SOLO
+
+from .Settings import *
+
+
 def create_rgb_button(identifier, name=None, **k):
     return create_sysex_sending_button(
  identifier,
@@ -46,8 +48,8 @@ class Elements(ElementsBase):
         self.add_button(21, "Play_Button")
         self.add_button(22, "Record_Button")
 
-        if TAP_BUTTON_IS_SHIFT_BUTTON:
-            self.add_modifier_button(23, "Shift_Button")
+        if TAP_SHIFT_MODE:
+            self.add_modifier_button(23, "Tap_Button")
         else:
             self.add_button(23, "Tap_Button")
 
@@ -55,9 +57,9 @@ class Elements(ElementsBase):
         self.add_button(25, "Rewind_Button")
         self.add_button(26, "Fastforward_Button")
 
-        if TAP_BUTTON_IS_SHIFT_BUTTON:
-            self.add_modified_control(control=(self.rewind_button),modifier=(self.shift_button),name="previous_device_button")
-            self.add_modified_control(control=(self.fastforward_button),modifier=(self.shift_button),name="next_device_button")
+        if TAP_SHIFT_MODE:
+            self.add_modified_control(control=(self.rewind_button),modifier=(self.tap_button),name="previous_device_button")
+            self.add_modified_control(control=(self.fastforward_button),modifier=(self.tap_button),name="next_device_button")
 
         self.add_button(27, "Metronome_Button")
         self.add_button(40, "Save_Button")
@@ -67,14 +69,21 @@ class Elements(ElementsBase):
         self.add_button(44, "Context_Button_0")
         self.add_button(45, "Context_Button_1")
 
-        if CONTEXT_1_WITH_SHIFT_IS_SOLO and TAP_BUTTON_IS_SHIFT_BUTTON:
-            self.add_modified_control(control=(self.context_button_1),modifier=(self.shift_button),name="target_track_solo_button")
+        if TAP_CONTEXT_1_IS_SOLO and TAP_SHIFT_MODE:
+            self.add_modified_control(control=(self.context_button_1),modifier=(self.tap_button),name="target_track_solo_button")
 
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")
         self.add_button(117, "Display_Encoder_Button")
         self.add_button(118, "Bank_Button")
         self.add_button(119, "Part_Button")
+
+
+        if PY_TOGGLE_WRENCH:
+            self.add_modified_control(control=(self.part_button),modifier=(self.tap_button),name="wrench_toggle_button")
+
+
+
         self.add_matrix([
             [
                 40, 41, 42, 43], [36, 37, 38, 39]],
@@ -84,12 +93,12 @@ class Elements(ElementsBase):
         self.add_matrix([
             range(44, 52)],
             "Pad_Bank_B", element_factory=create_rgb_pad, channels=10)
-        if TAP_BUTTON_IS_SHIFT_BUTTON and PADS_MUTE_SOLO:
+        if TAP_SHIFT_MODE and TAP_PADS_MUTE_SOLO:
             #reorder so that pad 5 is the first button
             row=[self.pad_bank_b._orig_buttons[0][i] for i in [4,5,6,7,0,1,2,3]]
             pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
-            self.add_modified_control(control=(self.pad_bank_a),modifier=(self.shift_button),name="pad_bank_a_shifted")
-            self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.shift_button),name="pad_bank_b_shifted")
+            self.add_modified_control(control=(self.pad_bank_a),modifier=(self.tap_button),name="pad_bank_a_shifted")
+            self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.tap_button),name="pad_bank_b_shifted")
 
 
 

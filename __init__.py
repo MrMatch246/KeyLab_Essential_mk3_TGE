@@ -25,11 +25,11 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
     REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
 
-from .Settings import ENABLE_AUTO_ARM,TAP_BUTTON_IS_SHIFT_BUTTON
-if TAP_BUTTON_IS_SHIFT_BUTTON:
-    from .devices import DeviceControlsComponent as DeviceComponent
-else:
-    from ableton.v3.control_surface.components import DeviceComponent as DeviceComponent
+from .Settings import I_HAVE_PYTHON_3, ENABLE_AUTO_ARM
+from .PythonBridge import KeystrokeProxie, setup_requirements, start_server
+from .devices import DeviceControlsComponent
+
+
 
 def get_capabilities():
     return {CONTROLLER_ID_KEY: (controller_id(vendor_id=7285,
@@ -38,8 +38,8 @@ def get_capabilities():
                           model_name=[
                          "KL Essential 49 mk3",
                          "KL Essential 61 mk3",
-                         "KL Essential 88 mk3"])), 
-     
+                         "KL Essential 88 mk3"])),
+
      PORTS_KEY: [
                  inport(props=[NOTES_CC, SCRIPT]),
                  inport(props=[NOTES_CC]),
@@ -63,10 +63,10 @@ class Specification(ControlSurfaceSpecification):
     create_mappings_function = create_mappings
     hello_messages = (CONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE)
     goodbye_messages = (DISCONNECTION_MESSAGE,)
-    component_map = {'Device':partial(DeviceComponent,
+    component_map = {'Device':partial(DeviceControlsComponent,
        bank_size=16,
-       bank_navigation_component_type=DeviceBankToggleComponent), 
-     'Drum_Group':DrumGroupComponent, 
+       bank_navigation_component_type=DeviceBankToggleComponent),
+     'Drum_Group':DrumGroupComponent,
      'Mixer':MixerComponent}
     display_specification = display_specification
 
@@ -78,6 +78,9 @@ class KeyLab_Essential_mk3(ControlSurface):
 
     def setup(self):
         super().setup()
+        if I_HAVE_PYTHON_3:
+            setup_requirements()
+            start_server()
         self._KeyLab_Essential_mk3__on_firmware_program_changed.subject = self.elements.program_command
 
     @listens("value")
@@ -88,5 +91,10 @@ class KeyLab_Essential_mk3(ControlSurface):
 
             self.elements.encoder_9.realign_value()
             self.set_can_auto_arm(ENABLE_AUTO_ARM)
+
+    def __del__(self):
+        if I_HAVE_PYTHON_3:
+            KeystrokeProxie().shutdown()
+        super().__del__()
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/__init__.pyc

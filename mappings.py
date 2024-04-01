@@ -7,14 +7,14 @@
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-from .Settings import FADER_9_IS_MASTER, TAP_BUTTON_IS_SHIFT_BUTTON, \
-    TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON, CONTEXT_1_WITH_SHIFT_IS_SOLO, \
-    PADS_MUTE_SOLO
+from .Settings import FADER_9_IS_MASTER, TAP_SHIFT_MODE, \
+    TAP_DUAL_MODE, TAP_CONTEXT_1_IS_SOLO, \
+    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION
 
 
 def create_mappings(_):
     mappings = {}
-    mappings["Modifier_Background"] = dict(shift="shift_button")
+    mappings["Modifier_Background"] = dict(shift="tap_button")
     mappings["Transport"] = dict(play_button="play_button",
                                  stop_button="stop_button",
                                  metronome_button="metronome_button",
@@ -23,10 +23,7 @@ def create_mappings(_):
                                  rewind_button="rewind_button",
                                  fastforward_button="fastforward_button")
 
-    if TAP_BUTTON_IS_SHIFT_BUTTON:
-        if TAP_BUTTON_IS_SHIFT_BUTTON_AND_TAP_BUTTON:
-            mappings["Transport"]["tap_tempo_button"] = "shift_button"
-    else:
+    if TAP_SHIFT_MODE is TAP_DUAL_MODE:
         mappings["Transport"]["tap_tempo_button"] = "tap_button"
 
     mappings["View_Based_Recording"] = dict(record_button="record_button")
@@ -45,10 +42,10 @@ def create_mappings(_):
                      target_track_volume_control="fader_9",
                      target_track_pan_control="encoder_9")
 
-    if TAP_BUTTON_IS_SHIFT_BUTTON and CONTEXT_1_WITH_SHIFT_IS_SOLO:
+    if TAP_CONTEXT_1_IS_SOLO:
         mixer["target_track_solo_button"] = "target_track_solo_button"
 
-    if TAP_BUTTON_IS_SHIFT_BUTTON and PADS_MUTE_SOLO:
+    if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"
         mixer["solo_buttons"] = "pad_bank_b_shifted"
 
@@ -61,11 +58,12 @@ def create_mappings(_):
         support_momentary_mode_cycling=False,
         cycle_mode_button="context_button_0", device=dict(component="Device",
                                                           parameter_controls="continuous_controls",
-                                                          bank_toggle_button="part_button"),
+                                                          bank_toggle_button="part_button",
+                                                          wrench_toggle_button="wrench_toggle_button"),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders", bank_toggle_button="part_button"))
 
-    if TAP_BUTTON_IS_SHIFT_BUTTON:
+    if TAP_DEVICE_NAVIGATION:
         mappings["Continuous_Control_Modes"]["device"][
             "prev_button"] = "previous_device_button"
         mappings["Continuous_Control_Modes"]["device"][
