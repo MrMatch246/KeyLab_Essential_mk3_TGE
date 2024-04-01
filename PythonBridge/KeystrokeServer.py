@@ -1,21 +1,21 @@
 import socket
 import sys
 import pyautogui
+import os
 
-#USER_HOME = os.path.expanduser('~')
-#LOG_DIRECTORY = USER_HOME + "/Documents/Ableton/User Library/Remote Scripts"
-#try:
+# USER_HOME = os.path.expanduser('~')
+# LOG_DIRECTORY = USER_HOME + "/Documents/Ableton/User Library/Remote Scripts"
+# try:
 #    os.makedirs(LOG_DIRECTORY, exist_ok=True)
-#except TypeError:
+# except TypeError:
 #    try:
 #        os.makedirs(LOG_DIRECTORY)
 #    except OSError:
 #        pass
-#LOG_FILE = LOG_DIRECTORY + "/log.txt"
-#log_num = 0
-#shutdown = False
-
-
+# LOG_FILE = LOG_DIRECTORY + "/log.txt"
+# log_num = 0
+#
+#
 # def log(message):
 #     global log_num
 #     with open(LOG_FILE, 'a') as f:
@@ -23,6 +23,8 @@ import pyautogui
 #             message = '\n'.join(message)
 #         f.write(str(log_num) + ' ' + str(message) + '\n')
 #     log_num += 1
+#
+shutdown = False
 
 def handle_connection(conn, addr):
     while True:
@@ -50,6 +52,7 @@ def main(port):
                     handle_connection(conn, addr)
     except Exception as e:
         #log(f"Error: {e}")
+        print(f"Error: {e}")
         pass
 
 

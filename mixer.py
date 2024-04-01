@@ -10,9 +10,11 @@ from ableton.v3.base import listens, nop
 from ableton.v3.control_surface.components import MixerComponent as MixerComponentBase
 from ableton.v3.control_surface.components import SessionRingComponent
 from ableton.v3.control_surface.controls import ButtonControl
-
+from .PythonBridge import dispatch_hotkey
+from .Settings import PY_SAVE_PROJECT,IS_MAC
 class MixerComponent(MixerComponentBase):
     bank_toggle_button = ButtonControl()
+    save_project_button = ButtonControl()
 
     def __init__(self, *a, **k):
         self._session_ring = SessionRingComponent(name="Mixer_Session_Ring",
@@ -36,5 +38,18 @@ class MixerComponent(MixerComponentBase):
     def __on_tracks_changed(self):
         self.bank_toggle_button.enabled = len(self._session_ring.tracks_to_use()) > 8
         self.bank_toggle_button.color = "Banking.PageOne" if self._session_ring.track_offset == 0 else "Banking.PageTwo"
+
+    def set_save_project_button(self, button):
+        self.save_project_button.set_control_element(button)
+
+    @save_project_button.pressed
+    def save_project_button(self, _):
+        if PY_SAVE_PROJECT:
+            if IS_MAC:
+                dispatch_hotkey("command+s")
+            else:
+                dispatch_hotkey("ctrl+s")
+
+
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/mixer.pyc

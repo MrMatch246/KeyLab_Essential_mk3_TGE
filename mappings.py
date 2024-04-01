@@ -9,7 +9,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from .Settings import FADER_9_IS_MASTER, TAP_SHIFT_MODE, \
     TAP_DUAL_MODE, TAP_CONTEXT_1_IS_SOLO, \
-    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION
+    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION , PY_SAVE_PROJECT
 
 
 def create_mappings(_):
@@ -48,6 +48,9 @@ def create_mappings(_):
     if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"
         mixer["solo_buttons"] = "pad_bank_b_shifted"
+
+    if PY_SAVE_PROJECT:
+        mixer["save_project_button"] = "save_project_button"
 
     mappings["Mixer"] = mixer
     mappings["Session"] = dict(

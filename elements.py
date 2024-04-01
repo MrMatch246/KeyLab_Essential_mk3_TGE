@@ -63,6 +63,10 @@ class Elements(ElementsBase):
 
         self.add_button(27, "Metronome_Button")
         self.add_button(40, "Save_Button")
+
+        if PY_SAVE_PROJECT:
+            self.add_modified_control(control=(self.save_button),modifier=(self.tap_button),name="save_project_button")
+
         self.add_button(41, "Punch_Button")
         self.add_button(42, "Undo_Button")
         self.add_button(43, "Redo_Button")

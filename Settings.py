@@ -41,6 +41,8 @@ PY_PORT = 49200
 # The wrench has three modes black, grey and blue. The button toggles between grey and blue
 PY_TOGGLE_WRENCH = True
 
+# Save your Project! with the Tap + Save Button!!!
+PY_SAVE_PROJECT = True
 
 
 
@@ -66,6 +68,7 @@ if not TAP_SHIFT_MODE:
 
 if not I_HAVE_PYTHON_3:
     PY_TOGGLE_WRENCH = False
+    PY_SAVE_PROJECT = False
 
 
 
