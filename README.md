@@ -1,4 +1,7 @@
-Modified the Scripts for the Arturia KeyLab Essential Mk3 
+# Arturia Keylab Essential MK3 TGE
+------------------------------------
+
+Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fixes and the cool features that arturia just overlooked! 
 
 ## Current Features (You can choose which to use):
 
