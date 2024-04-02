@@ -93,8 +93,8 @@ def get_first_last_track_name(state):
     return (first, last)
 
 def get_first_last_param_name(state):
-    first_param = state.elements.continuous_controls[0].parameter_name
-    last_param = first_param
+    first_param = state.elements.continuous_controls[0].parameter_name if state.elements.continuous_controls[0].parameter_name else "No"
+    last_param = "Device"
     for param in state.elements.continuous_controls[::-1]:
         if param.parameter_name:
             last_param = param.parameter_name
