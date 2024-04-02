@@ -103,6 +103,11 @@ def get_first_last_param_name(state):
     last = last_param.ljust(8)[:8].strip()
     return (first, last)
 
+def get_device_name(state):
+    name = state.device.device.name if state.device.device else "No Device"
+    name=name.ljust(13)[:12].strip()
+    return f"{name} {state.device_bank_navigation.bank_index + 1}"
+
 def create_root_view() -> view.View[Optional[Content]]:
     @view.View
     def main_view(state) -> Optional[Content]:
@@ -112,10 +117,21 @@ def create_root_view() -> view.View[Optional[Content]]:
         else:
             if state.continuous_control_modes.selected_mode == "device":
                 (first, last) = get_first_last_param_name(state)
-                popup = (f"{state.device.device.name if state.device.device else 'Parameters'} {state.device_bank_navigation.bank_index + 1}",f"{first} - {last}")
+                popup = (get_device_name(state),f"{first} - {last}")
             else:
                 (first, last) = get_first_last_track_name(state)
                 popup = (f"Tracks {state.mixer_session_ring.offset[0]//8 + 1 }", f"{first} - {last}")
+
+        footer = (Icon(IconType.MIXER,
+                       IconState.OPENED if state.continuous_control_modes.selected_mode == "mixer" else IconState.CLOSED),
+                  Icon(IconType.ARM,
+                       IconState.FRAMED if is_track_armed(
+                           state.target_track.target_track) else IconState.UNFRAMED),
+                  Icon(view_based_content(
+                      IconType.LEFT_ARROW,
+                      IconType.UP_ARROW)), Icon(
+            view_based_content(IconType.RIGHT_ARROW,
+                               IconType.DOWN_ARROW)))
         return Content(primary=(liveobj_name(state.target_track.target_track),
                                 display_name(song().view.selected_scene)),
                        parameters=(tuple(((element.parameter_name,
@@ -126,16 +142,7 @@ def create_root_view() -> view.View[Optional[Content]]:
                                               state.elements.fader_9]))),
                        frame=Frame(header=(
                            view_based_content("Session", "Arrangement")),
-                                   footer=(Icon(IconType.MIXER,
-                                                IconState.OPENED if state.continuous_control_modes.selected_mode == "mixer" else IconState.CLOSED),
-                                           Icon(IconType.ARM,
-                                                IconState.FRAMED if is_track_armed(
-                                                    state.target_track.target_track) else IconState.UNFRAMED),
-                                           Icon(view_based_content(
-                                               IconType.LEFT_ARROW,
-                                               IconType.UP_ARROW)), Icon(
-                                       view_based_content(IconType.RIGHT_ARROW,
-                                                          IconType.DOWN_ARROW)))),
+                                   footer=footer),
                        popup=popup)
 
     return view.CompoundView(view.DisconnectedView(),
