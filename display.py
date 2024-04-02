@@ -16,7 +16,6 @@ from ableton.v3.control_surface.display import DefaultNotifications, \
     DisplaySpecification, Text, view
 from ableton.v3.live import display_name, is_arrangement_view_active, \
     is_track_armed, liveobj_name, song
-from .Log import log
 
 Line1Text = partial(Text, max_width=11, justification=(Text.Justification.NONE))
 Line2Text = partial(Text, max_width=20, justification=(Text.Justification.NONE))
