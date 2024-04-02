@@ -9,12 +9,14 @@ from __future__ import absolute_import, print_function, unicode_literals
 from ableton.v3.base import listens, nop
 from ableton.v3.control_surface.components import MixerComponent as MixerComponentBase
 from ableton.v3.control_surface.components import SessionRingComponent
-from ableton.v3.control_surface.controls import ButtonControl
+from ableton.v3.control_surface.components.scroll import ScrollComponent,Scrollable
+from ableton.v3.control_surface.controls import ButtonControl,StepEncoderControl
 from .PythonBridge import dispatch_hotkey
-from .Settings import PY_SAVE_PROJECT,IS_MAC
-class MixerComponent(MixerComponentBase):
+from .Settings import PY_SAVE_PROJECT,IS_MAC , ENABLE_ROUNDTRIP_BANKING_TRACK
+class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     bank_toggle_button = ButtonControl()
     save_project_button = ButtonControl()
+    scroll_encoder = StepEncoderControl(num_steps=64)
 
     def __init__(self, *a, **k):
         self._session_ring = SessionRingComponent(name="Mixer_Session_Ring",
@@ -50,6 +52,43 @@ class MixerComponent(MixerComponentBase):
             else:
                 dispatch_hotkey("ctrl+s")
 
+    @scroll_encoder.value
+    def scroll_encoder(self, value, _):
+        if len(self._session_ring.tracks_to_use()) > 8:
+            if ENABLE_ROUNDTRIP_BANKING_TRACK:
+                if value < 0:
+                    self.scroll_down()
+                else:
+                    self.scroll_up()
+            else:
+                if value > 0 and self.can_scroll_up():
+                    self.scroll_up()
+                if value < 0 and self.can_scroll_down():
+                    self.scroll_down()
+
+    def can_scroll_up(self):
+        current_offset = self._session_ring.track_offset
+        if len(self._session_ring.tracks_to_use()) >current_offset + 8:
+            return True
+        return False
+
+    def can_scroll_down(self):
+        current_offset = self._session_ring.track_offset
+        if current_offset > 0:
+            return True
+        return False
+
+    def scroll_up(self):
+        new_offset = self._session_ring.track_offset + 8
+        if new_offset >= len(self._session_ring.tracks_to_use()):
+            new_offset = 0
+        self._session_ring.track_offset = new_offset
+
+    def scroll_down(self):
+        new_offset = self._session_ring.track_offset - 8
+        if new_offset < 0:
+            new_offset = (len(self._session_ring.tracks_to_use()) // 8) * 8
+        self._session_ring.track_offset = new_offset
 
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/mixer.pyc

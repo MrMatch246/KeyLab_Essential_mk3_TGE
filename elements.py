@@ -113,8 +113,10 @@ class Elements(ElementsBase):
         self.add_encoder(113, "Fader_9")
         self.add_encoder(116, "Display_Encoder", map_mode=(MapMode.LinearBinaryOffset))
 
-        if ENCODER_DEVICE_BANK:
+        if ENCODER_DEVICE_BANK or ENCODER_TRACK_BANK:
             self.add_modified_control(control=(self.display_encoder),modifier=(self.part_button),name="display_encoder_button_part_shifted")
+
+
 
         self.add_matrix([
             list(range(96, 104)) + list(range(105, 113))],

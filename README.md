@@ -1,25 +1,38 @@
 Modified the Scripts for the Arturia KeyLab Essential Mk3 
 
-Current Features (You can choose which to use):
+## Current Features (You can choose which to use):
 
 - Fader 9 controls Master(and knob 9 controls cue volume) instead of current track volume and pan
 
 - Enabled Auto Arm
 
-- Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:
+- Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:  
 
-- TAP + Rewind / FastForward = previous/next device in chain
+    - TAP + Rewind / FastForward = previous/next device in chain
 
-- TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
+    - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
 
-- TAB + PAD Bank A = Mute Tracks
+    - TAB + PAD Bank A = Mute Tracks
 
-- TAB + PAD Bank B = Solo Tracks
+    - TAB + PAD Bank B = Solo Tracks
+    
+    - TAP + Main Encoder In Device Mode = Scrolls through the Parameter Banks
+      - Popup shows selected Device and Bank Number and first and last parameter of the bank
+  
+    - TAP + Main Encoder In Mixer Mode = Scrolls through the Track Groups 
+      - Popup shows selected Track Group and first and last track name of the group
 
-(TAP/Shift can be used as either both, only Shift mode or only TAP mode)
+  (TAP/Shift can be used as either both, only Shift mode or only TAP mode)
+
+- ### If you have python3 running (should work on windows and mac) :
+  - TAP + Part button Toggles Plugin Window (Wrench Icon) 
+    - You need to have the windows opened before you can toggle close them (Ctrl + Alt + P)
+  - TAP + Save Saves the current project!!!!!!! (Ctrl + S)
+ 
+-------------------------
 
 
-Install:
+# Install:
 
 - Go into Live
 

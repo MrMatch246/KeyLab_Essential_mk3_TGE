@@ -16,6 +16,7 @@ from ableton.v3.control_surface.display import DefaultNotifications, \
     DisplaySpecification, Text, view
 from ableton.v3.live import display_name, is_arrangement_view_active, \
     is_track_armed, liveobj_name, song
+from .Log import log
 
 Line1Text = partial(Text, max_width=11, justification=(Text.Justification.NONE))
 Line2Text = partial(Text, max_width=20, justification=(Text.Justification.NONE))
@@ -82,6 +83,26 @@ class Notifications(DefaultNotifications):
     class Transport(DefaultNotifications.Transport):
         tap_tempo = lambda tempo: Content(popup=("Tap Tempo", str(int(tempo))))
 
+def get_first_last_track_name(state):
+    first_track = state.mixer_session_ring.tracks[0]
+    for track in state.mixer_session_ring.tracks[::-1]:
+        if track:
+            last_track = track
+            break
+    first = liveobj_name(first_track).ljust(8)[:7].strip()
+    last = liveobj_name(last_track).ljust(8)[:8].strip()
+    return (first, last)
+
+def get_first_last_param_name(state):
+    first_param = state.elements.continuous_controls[0].parameter_name
+    last_param = first_param
+    for param in state.elements.continuous_controls[::-1]:
+        if param.parameter_name:
+            last_param = param.parameter_name
+            break
+    first = first_param.ljust(8)[:7].strip()
+    last = last_param.ljust(8)[:8].strip()
+    return (first, last)
 
 def create_root_view() -> view.View[Optional[Content]]:
     @view.View
@@ -91,10 +112,10 @@ def create_root_view() -> view.View[Optional[Content]]:
             popup = None
         else:
             if state.continuous_control_modes.selected_mode == "device":
-                popup = ("Device control",f"Page {state.device_bank_navigation.bank_index + 1}")
+                popup = (f"{state.device.device.name if state.device.device else 'Parameters'} {state.device_bank_navigation.bank_index + 1}",f"{first} - {last}")
             else:
-                popup = ("Tracks control", f"Page {state.mixer_session_ring.offset[0] + 1}")
-
+                (first, last) = get_first_last_track_name(state)
+                popup = (f"Tracks {state.mixer_session_ring.offset[0]//8 + 1 }", f"{first} - {last}")
         return Content(primary=(liveobj_name(state.target_track.target_track),
                                 display_name(song().view.selected_scene)),
                        parameters=(tuple(((element.parameter_name,

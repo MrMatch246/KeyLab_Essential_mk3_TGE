@@ -7,7 +7,7 @@ from ableton.v3.control_surface.components import SimpleDeviceNavigationComponen
 from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl
 from ableton.v3.control_surface.display import Renderable
 from .PythonBridge import dispatch_hotkey
-from .Settings import PY_TOGGLE_WRENCH, IS_MAC,ENABLE_ROUNDTRIP_BANKING
+from .Settings import PY_TOGGLE_WRENCH, IS_MAC,ENABLE_ROUNDTRIP_BANKING_PARAM
 
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
@@ -48,8 +48,8 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
             self.has_changed_bank_index = True
     @scroll_encoder.value
     def scroll_encoder(self, value, _):
-        if self._bank_provider.bank_count() > 1:
-            if ENABLE_ROUNDTRIP_BANKING:
+        if self._bank_provider and self._bank_provider.bank_count() > 1:
+            if ENABLE_ROUNDTRIP_BANKING_PARAM:
                 if value < 0:
                     self.scroll_down()
                 else:
