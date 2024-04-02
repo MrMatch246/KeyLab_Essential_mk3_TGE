@@ -111,6 +111,7 @@ def create_root_view() -> view.View[Optional[Content]]:
             popup = None
         else:
             if state.continuous_control_modes.selected_mode == "device":
+                (first, last) = get_first_last_param_name(state)
                 popup = (f"{state.device.device.name if state.device.device else 'Parameters'} {state.device_bank_navigation.bank_index + 1}",f"{first} - {last}")
             else:
                 (first, last) = get_first_last_track_name(state)
