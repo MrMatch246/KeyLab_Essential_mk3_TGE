@@ -5,7 +5,7 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
 ## Current Features (You can choose which to use):
 
-- Fader 9 controls Master(and knob 9 controls cue volume) instead of current track volume and pan
+- Fader 9 Controls Master in Tracks Mode (context button 0) and current track in device mode
 
 - Enabled Auto Arm
 
@@ -19,11 +19,13 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
     - TAB + PAD Bank B = Solo Tracks
     
-    - TAP + Main Encoder In Device Mode = Scrolls through the Parameter Banks
+    - Part + Main Encoder In Device Mode = Scrolls through the Parameter Banks
       - Popup shows selected Device and Bank Number and first and last parameter of the bank
   
-    - TAP + Main Encoder In Mixer Mode = Scrolls through the Track Groups 
+    - Part + Main Encoder In Mixer Mode = Scrolls through the Track Groups 
       - Popup shows selected Track Group and first and last track name of the group
+    
+    -TAP+ Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks
 
   (TAP/Shift can be used as either both, only Shift mode or only TAP mode)
 
