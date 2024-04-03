@@ -62,6 +62,10 @@ ENABLE_ROUNDTRIP_BANKING_PARAM = True
 # in Track Control Mode
 ENCODER_TRACK_BANK = True
 
+# Set this to false if you don't want TAP and the encoder to also show the tracks
+ENCODER_TRACK_BANK_TAP = True
+
+
 # Set this to false if you don't want the encoder to jump to the first Tracks
 # Page after the last bank
 ENABLE_ROUNDTRIP_BANKING_TRACK = True

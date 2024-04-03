@@ -18,6 +18,13 @@ log_num = 0
 
 def log(message):
     global log_num
+    temp = ''
+    if not(message.__class__.__module__ == 'builtins'):
+        for att in dir(message):
+            value = getattr(message, att)
+            temp += att + ' ' + str(getattr(message, att)) + '\n'
+        message = temp
+
     with open(LOG_FILE, 'a') as f:
         if type(message) == list:
             message = '\n'.join(message)

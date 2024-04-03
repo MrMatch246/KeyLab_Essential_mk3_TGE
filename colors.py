@@ -28,21 +28,45 @@ class Rgb:
     RED_BLINK = create_blinking_color(127, 0, 0)
     GREEN = create_color(0, 127, 0)
     GREEN_HALF = create_color(0, 32, 0)
+    GREEN_HALF_BLINK = create_blinking_color(0, 32, 0)
     GREEN_BLINK = create_blinking_color(0, 127, 0)
     BLUE = create_color(0, 0, 127)
+    BLUE_HALF = create_color(0, 0, 32)
+    BLUE_THIRD = create_color(0, 0, 16)
     OCEAN = create_color(20, 80, 127)
+    OCEAN_HALF = create_color(10, 40, 64)
     AMBER = create_color(127, 50, 0)
     AMBER_HALF = create_color(20, 5, 0)
     YELLOW = create_color(127, 72, 0)
     YELLOW_HALF = create_color(32, 24, 0)
+    YELLOW_LOW = create_color(8, 6, 0)
+    PURPLE = create_color(64, 0, 127)
+    PURPLE_HALF = create_color(16, 0, 32)
+    PURPLE_HALF_BLINK = create_blinking_color(16, 0, 32)
 
 
 class Skin:
 
     class DefaultButton:
-        On = Rgb.WHITE
+        On = Rgb.OCEAN_HALF
+        Off = Rgb.OCEAN_HALF
+        Disabled = Rgb.OFF
+
+
+
+    class SaveProject:
+        On = Rgb.GREEN_HALF_BLINK
         Off = Rgb.OFF
         Disabled = Rgb.OFF
+
+    class Device:
+        On = Rgb.AMBER_HALF
+        Navigation = Rgb.PURPLE_HALF
+        NavigationPressed = Rgb.PURPLE
+        class Wrench:
+            On = Rgb.PURPLE
+            Off = Rgb.PURPLE_HALF
+
 
     class Transport:
         PlayOn = Rgb.GREEN
@@ -88,6 +112,12 @@ class Skin:
         ArmOn = Rgb.RED
         ArmOff = Rgb.RED_HALF
         NoTrack = Rgb.OFF
+        TrackSelected = Rgb.WHITE
+        SoloOn = Rgb.BLUE
+        SoloOff = Rgb.BLUE_THIRD
+        MuteOn = Rgb.YELLOW
+        MuteOff = Rgb.YELLOW_LOW
+
 
     class Session:
         Slot = Rgb.OFF
@@ -113,12 +143,20 @@ class Skin:
         PageOne = Rgb.WHITE_HALF
         PageTwo = Rgb.WHITE
 
+    class ModifierBackground:
+        Shift = Rgb.OCEAN_HALF
+        ShiftPressed = Rgb.OCEAN
+        Part = Rgb.OCEAN_HALF
+        PartPressed = Rgb.OCEAN
+
+
     class ContinuousControlModes:
 
         class Device:
-            On = Rgb.WHITE_HALF
+            On = Rgb.PURPLE_HALF
 
         class Mixer:
-            On = Rgb.WHITE
+            On = Rgb.GREEN_HALF
+            Off = Rgb.OFF
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/colors.pyc

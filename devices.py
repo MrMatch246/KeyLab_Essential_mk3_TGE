@@ -18,6 +18,8 @@ class DeviceControlsComponent(DeviceComponentBase,
 
     def set_wrench_toggle_button(self, button):
         self.wrench_toggle_button.set_control_element(button)
+        self.wrench_toggle_button.color = "Device.Wrench.Off"
+        self.wrench_toggle_button.on_color = "Device.Wrench.On"
 
     @wrench_toggle_button.pressed
     def wrench_toggle_button(self, _):
@@ -51,14 +53,14 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
         if self._bank_provider and self._bank_provider.bank_count() > 1:
             if ENABLE_ROUNDTRIP_BANKING_PARAM:
                 if value < 0:
-                    self.scroll_down()
+                    self.scroll_up()
                 else:
-                    self.scroll_up()
-            else:
-                if value > 0 and self.can_scroll_up():
-                    self.scroll_up()
-                if value < 0 and self.can_scroll_down():
                     self.scroll_down()
+            else:
+                if value > 0 and self.can_scroll_down():
+                    self.scroll_down()
+                if value < 0 and self.can_scroll_up():
+                    self.scroll_up()
 
     def scroll_up(self):
         new_index = self._bank_provider.index + 1

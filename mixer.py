@@ -43,6 +43,7 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
 
     def set_save_project_button(self, button):
         self.save_project_button.set_control_element(button)
+        self.save_project_button.color = "SaveProject.On"
 
     @save_project_button.pressed
     def save_project_button(self, _):
@@ -57,14 +58,14 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
         if len(self._session_ring.tracks_to_use()) > 8:
             if ENABLE_ROUNDTRIP_BANKING_TRACK:
                 if value < 0:
-                    self.scroll_down()
+                    self.scroll_up()
                 else:
-                    self.scroll_up()
-            else:
-                if value > 0 and self.can_scroll_up():
-                    self.scroll_up()
-                if value < 0 and self.can_scroll_down():
                     self.scroll_down()
+            else:
+                if value > 0 and self.can_scroll_down():
+                    self.scroll_down()
+                if value < 0 and self.can_scroll_up():
+                    self.scroll_up()
 
     def can_scroll_up(self):
         current_offset = self._session_ring.track_offset

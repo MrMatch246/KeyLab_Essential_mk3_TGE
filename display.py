@@ -82,6 +82,7 @@ class Notifications(DefaultNotifications):
     class Transport(DefaultNotifications.Transport):
         tap_tempo = lambda tempo: Content(popup=("Tap Tempo", str(int(tempo))))
 
+
 def get_first_last_track_name(state):
     first_track = state.mixer_session_ring.tracks[0]
     for track in state.mixer_session_ring.tracks[::-1]:
@@ -92,8 +93,10 @@ def get_first_last_track_name(state):
     last = liveobj_name(last_track).ljust(8)[:8].strip()
     return (first, last)
 
+
 def get_first_last_param_name(state):
-    first_param = state.elements.continuous_controls[0].parameter_name if state.elements.continuous_controls[0].parameter_name else "No"
+    first_param = state.elements.continuous_controls[0].parameter_name if \
+        state.elements.continuous_controls[0].parameter_name else "No"
     last_param = "Device"
     for param in state.elements.continuous_controls[::-1]:
         if param.parameter_name:
@@ -103,10 +106,12 @@ def get_first_last_param_name(state):
     last = last_param.ljust(8)[:8].strip()
     return (first, last)
 
+
 def get_device_name(state):
     name = state.device.device.name if state.device.device else "No Device"
-    name=name.ljust(13)[:12].strip()
+    name = name.ljust(13)[:12].strip()
     return f"{name} {state.device_bank_navigation.bank_index + 1}"
+
 
 def create_root_view() -> view.View[Optional[Content]]:
     @view.View
@@ -116,22 +121,27 @@ def create_root_view() -> view.View[Optional[Content]]:
             popup = None
         else:
             if state.continuous_control_modes.selected_mode == "device":
+
                 (first, last) = get_first_last_param_name(state)
-                popup = (get_device_name(state),f"{first} - {last}")
+                popup = (get_device_name(state), f"{first} - {last}")
             else:
                 (first, last) = get_first_last_track_name(state)
-                popup = (f"Tracks {state.mixer_session_ring.offset[0]//8 + 1 }", f"{first} - {last}")
+                popup = (
+                    f"Tracks {state.mixer_session_ring.offset[0] // 8 + 1}",
+                    f"{first} - {last}")
 
-        footer = (Icon(IconType.MIXER,
-                       IconState.OPENED if state.continuous_control_modes.selected_mode == "mixer" else IconState.CLOSED),
-                  Icon(IconType.ARM,
-                       IconState.FRAMED if is_track_armed(
-                           state.target_track.target_track) else IconState.UNFRAMED),
-                  Icon(view_based_content(
-                      IconType.LEFT_ARROW,
-                      IconType.UP_ARROW)), Icon(
-            view_based_content(IconType.RIGHT_ARROW,
-                               IconType.DOWN_ARROW)))
+        if state.continuous_control_modes.selected_mode == "mixer":
+            icon_1 = Icon(IconType.MIXER,IconState.OPENED)
+        else:
+            icon_1 = Icon(IconType.MIXER, IconState.CLOSED)
+
+        if is_track_armed(state.target_track.target_track):
+            icon_2 = Icon(IconType.ARM, IconState.FRAMED)
+        else:
+            icon_2 = Icon(IconType.ARM, IconState.UNFRAMED)
+
+        icon_3 = Icon(view_based_content(IconType.LEFT_ARROW, IconType.UP_ARROW))
+        icon_4 = Icon(view_based_content(IconType.RIGHT_ARROW, IconType.DOWN_ARROW))
         return Content(primary=(liveobj_name(state.target_track.target_track),
                                 display_name(song().view.selected_scene)),
                        parameters=(tuple(((element.parameter_name,
@@ -142,7 +152,7 @@ def create_root_view() -> view.View[Optional[Content]]:
                                               state.elements.fader_9]))),
                        frame=Frame(header=(
                            view_based_content("Session", "Arrangement")),
-                                   footer=footer),
+                           footer=(icon_1, icon_2, icon_3, icon_4)),
                        popup=popup)
 
     return view.CompoundView(view.DisconnectedView(),

@@ -106,6 +106,9 @@ class Elements(ElementsBase):
             pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
             self.add_modified_control(control=(self.pad_bank_a),modifier=(self.tap_button),name="pad_bank_a_shifted")
             self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.tap_button),name="pad_bank_b_shifted")
+            self.add_modified_control(control=(self.pad_bank_a),modifier=(self.part_button),name="pad_bank_a_part_shifted")
+            self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.part_button),name="pad_bank_b_part_shifted")
+
 
 
 
@@ -115,6 +118,7 @@ class Elements(ElementsBase):
 
         if ENCODER_DEVICE_BANK or ENCODER_TRACK_BANK:
             self.add_modified_control(control=(self.display_encoder),modifier=(self.part_button),name="display_encoder_button_part_shifted")
+            self.add_modified_control(control=(self.display_encoder),modifier=(self.tap_button),name="display_encoder_button_tap_shifted")
 
 
 

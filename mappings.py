@@ -7,15 +7,14 @@
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-from .Settings import FADER_9_IS_MASTER, TAP_SHIFT_MODE, \
-    TAP_DUAL_MODE, TAP_CONTEXT_1_IS_SOLO, \
-    TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION, PY_SAVE_PROJECT, \
-    ENCODER_DEVICE_BANK, ENCODER_TRACK_BANK
+from .Settings import TAP_SHIFT_MODE, TAP_DUAL_MODE, \
+    TAP_CONTEXT_1_IS_SOLO, TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION, \
+    PY_SAVE_PROJECT, ENCODER_DEVICE_BANK, ENCODER_TRACK_BANK, ENCODER_TRACK_BANK_TAP
 
 
 def create_mappings(_):
     mappings = {}
-    mappings["Modifier_Background"] = dict(shift="tap_button")
+    mappings["Modifier_Background"] = dict(shift="tap_button",part="part_button")
     mappings["Transport"] = dict(play_button="play_button",
                                  stop_button="stop_button",
                                  metronome_button="metronome_button",
@@ -34,14 +33,10 @@ def create_mappings(_):
     mappings["View_Control"] = dict(prev_track_button="context_button_2",
                                     next_track_button="context_button_3",
                                     scene_encoder="display_encoder")
-    if FADER_9_IS_MASTER:
-        mixer = dict(target_track_arm_button="context_button_1",
-                     master_track_volume_control="fader_9",
-                     prehear_volume_control="encoder_9")
-    else:
-        mixer = dict(target_track_arm_button="context_button_1",
-                     target_track_volume_control="fader_9",
-                     target_track_pan_control="encoder_9")
+
+    mixer = dict(target_track_arm_button="context_button_1",
+                 target_track_volume_control="fader_9",
+                 target_track_pan_control="encoder_9")
 
     if TAP_CONTEXT_1_IS_SOLO:
         mixer["target_track_solo_button"] = "target_track_solo_button"
@@ -51,7 +46,11 @@ def create_mappings(_):
         mixer["solo_buttons"] = "pad_bank_b_shifted"
 
     if PY_SAVE_PROJECT:
-        mixer["save_project_button"] = "save_project_button"
+        mixer[
+            "save_project_button"] = "save_project_button"
+
+    if ENCODER_TRACK_BANK_TAP:
+        mixer["scroll_encoder"] = "display_encoder_button_tap_shifted"
 
     mappings["Mixer"] = mixer
     mappings["Session"] = dict(
@@ -66,18 +65,26 @@ def create_mappings(_):
                                                           bank_scroll_encoder="display_encoder_button_part_shifted"),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders",
-                   scroll_encoder="display_encoder_button_part_shifted"
-                   ))
+                   scroll_encoder="display_encoder_button_part_shifted",
+                   master_track_volume_control="fader_9",
+                   prehear_volume_control="encoder_9",
+                   mute_buttons="pad_bank_a_part_shifted",
+                   solo_buttons="pad_bank_b_part_shifted"
+                   )
+    )
     if ENCODER_DEVICE_BANK:
-        mappings["Continuous_Control_Modes"]["device"]["bank_scroll_encoder"] = "display_encoder_button_part_shifted"
+        mappings["Continuous_Control_Modes"]["device"][
+            "bank_scroll_encoder"] = "display_encoder_button_part_shifted"
     else:
-        mappings["Continuous_Control_Modes"]["device"]["bank_toggle_button"] = "part_button"
+        mappings["Continuous_Control_Modes"]["device"][
+            "bank_toggle_button"] = "part_button"
 
     if ENCODER_TRACK_BANK:
-        mappings["Continuous_Control_Modes"]["mixer"]["scroll_encoder"] = "display_encoder_button_part_shifted"
+        mappings["Continuous_Control_Modes"]["mixer"][
+            "scroll_encoder"] = "display_encoder_button_part_shifted"
     else:
-        mappings["Continuous_Control_Modes"]["mixer"]["bank_toggle_button"] = "part_button"
-
+        mappings["Continuous_Control_Modes"]["mixer"][
+            "bank_toggle_button"] = "part_button"
 
     if TAP_DEVICE_NAVIGATION:
         mappings["Continuous_Control_Modes"]["device"][
