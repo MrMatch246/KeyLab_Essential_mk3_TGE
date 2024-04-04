@@ -11,14 +11,14 @@ except TypeError:
         pass
 LOG_FILE = LOG_DIRECTORY + "/log.txt"
 
-
-with open(LOG_FILE, 'a') as f:
-    f.write('====================\n')
 log_num = 0
 
 
 def log(message):
     global log_num
+    if log_num == 0:
+        with open(LOG_FILE, 'a') as f:
+            f.write('====================\n')
     temp = ''
     if not(message.__class__.__module__ == 'builtins'):
         for att in dir(message):

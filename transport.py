@@ -1,6 +1,7 @@
 
 from ableton.v3.control_surface.components import TransportComponent as TransportComponentBase
 from ableton.v3.control_surface.controls import ButtonControl
+from ableton.v3.control_surface.skin import OptionalSkinEntry
 from ableton.v3.live import get_bar_length, move_current_song_time
 from .Settings import *
 
@@ -13,6 +14,12 @@ class TransportComponent(TransportComponentBase):
     rewind_button = ButtonControl(**seek_dict)
     fastforward_button = ButtonControl(**seek_dict)
     play_button = ButtonControl(color="Transport.PlayOff", on_color="Transport.PlayOn")
+    stop_button = ButtonControl(color="Transport.StopOff",
+                            on_color="Transport.StopOn",
+                            pressed_color=(OptionalSkinEntry("Transport.StopPressed")))
+    def __init__(self, *a, **k):
+        super(TransportComponent, self).__init__(*a, **k)
+        self.stopped = False
     @rewind_button.pressed
     def rewind_button(self, _):
         move_current_song_time(self.song, -REWIND_FORWARD_SPEED)
@@ -27,9 +34,18 @@ class TransportComponent(TransportComponentBase):
             if self.song.is_playing:
                 self.song.stop_playing()
             else:
-                self.song.continue_playing()
+                if self.stopped:
+                    self.song.start_playing()
+                    self.stopped = False
+                else:
+                    self.song.continue_playing()
 
 
         @play_button.pressed_delayed
         def play_button(self, _):
             self.song.start_playing()
+
+        @stop_button.pressed
+        def stop_button(self, _):
+            self.song.stop_playing()
+            self.stopped = True
