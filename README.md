@@ -6,6 +6,7 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 ## Current Features (You can choose which to use):
 
 - Fader 9 Controls Master in Tracks Mode (context button 0) and current track in device mode
+  - Knob 9 Controls Prehear Volume in Tracks Mode (context button 0) and current track Panning in device mode
 
 - Enabled Auto Arm
 
@@ -13,19 +14,28 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
     - TAP + Rewind / FastForward = previous/next device in chain
 
+    - TAP + Context button 0 (The one that switches Track/Device mode) now MUTEs the Current Track
+     
     - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
 
     - TAB + PAD Bank A = Mute Tracks
 
     - TAB + PAD Bank B = Solo Tracks
+
+    - TAP + Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks in steps of 4
     
-    - Part + Main Encoder In Device Mode = Scrolls through the Parameter Banks
-      - Popup shows selected Device and Bank Number and first and last parameter of the bank
+    
+- Part + Main Encoder In Device Mode = Scrolls through the Parameter Banks
+  - Popup shows selected Device and Bank Number and first and last parameter of the bank
   
-    - Part + Main Encoder In Mixer Mode = Scrolls through the Track Groups 
-      - Popup shows selected Track Group and first and last track name of the group
-    
-    -TAP+ Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks
+- Part + Main Encoder In Mixer Mode scrolls through the Track Banks
+  - Bank A : Track Selection
+    - They can be clicked to select the track and their color will match the track color.
+    - They scroll up and down 4 tracks per encoder click (you will see what i mean).
+    - Popup shows selected Track Group and first and last track name of the group
+  - Bank B : Track Arming
+    - Similar to the Solo/Mute Pads but for Arming Tracks
+    - They scroll up and down 4 devices per encoder click (you will see what i mean).
 
   (TAP/Shift can be used as either both, only Shift mode or only TAP mode)
 
@@ -39,20 +49,30 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
 # Install:
 
+- Download the repo as zip  
+    ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/10d56113-c67d-4d25-a660-16fdd33b7992) 
+
+
 - Go into Live
 
-![image](https://github.com/MrMatch246/Launchkey_MK3_TGE/assets/50702646/5290bc01-4248-4e5d-9a44-b5f9a80c7d3c)
+  ![image](https://github.com/MrMatch246/Launchkey_MK3_TGE/assets/50702646/5290bc01-4248-4e5d-9a44-b5f9a80c7d3c)
 
-then
+- then 
 
-![image](https://github.com/MrMatch246/Launchkey_MK3_TGE/assets/50702646/559af2d9-a063-437a-b2fe-77be1f838203)
+  ![image](https://github.com/MrMatch246/Launchkey_MK3_TGE/assets/50702646/559af2d9-a063-437a-b2fe-77be1f838203)
 
-- open in finder/explorer.  
+- open "Remote Scripts" in finder/explorer.
+  - if there is no "Remote Scripts" folder, create one in the "User Library" folder
 
 - Close Live
 
-- Copy repo content there
-- start Live
-- and select it 
+- Unzip the downloaded file and copy the "KeyLab_Essential_mk3_TGE" folder into the "Remote Scripts" folder
+- Start Live and select it 
 
-![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/a3a87514-af62-4248-8688-7fcafd98aeb9)
+  ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/a3a87514-af62-4248-8688-7fcafd98aeb9)
+
+  - Device settings should look like this:
+
+    ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/187ef3db-4d02-4608-b62f-8691b9d2b66a)  
+    With input and output set to "KeyLab Essential mk3 MIDI" and the control surface set to "KeyLab Essential mk3 TGE"
+    the third row is "KeyLab Essential mk3 ALV" as input and "KeyLab Essential mk3 DINTHRU" as output without the control surface set

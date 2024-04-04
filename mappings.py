@@ -46,6 +46,10 @@ def create_mappings(control_surface):
                  bank_toggle_button="bank_button",
                  )
 
+
+    if TAP_CONTEXT_0_IS_MUTE:
+        mixer["target_track_mute_button"] = "target_track_mute_button"
+
     if TAP_CONTEXT_1_IS_SOLO:
         mixer["target_track_solo_button"] = "target_track_solo_button"
 

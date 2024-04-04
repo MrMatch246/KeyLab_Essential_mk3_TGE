@@ -19,6 +19,10 @@ TAP_SHIFT_MODE = True
 # this to True
 TAP_DUAL_MODE = False
 
+# If you want to use the Context 0 button that usually switches Track/device mode the track to mute
+# it when used with the Tap button set this to True
+TAP_CONTEXT_0_IS_MUTE = True
+
 # If you want to use the Context 1 button that usually arms the track to solo
 # it when used with the Tap button set this to True
 TAP_CONTEXT_1_IS_SOLO = True
@@ -87,6 +91,7 @@ SCENE_TRACK_NAVIGATION_SWITCH = True
 if not TAP_SHIFT_MODE:
     TAP_DUAL_MODE = False
     TAP_CONTEXT_1_IS_SOLO = False
+    TAP_CONTEXT_0_IS_MUTE = False
     TAP_PADS_MUTE_SOLO = False
     TAP_DEVICE_NAVIGATION = False
 
