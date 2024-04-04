@@ -24,6 +24,7 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
     - TAP + Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks in steps of 4
     
+- Double Click the Part Button to Lock the Device
     
 - Part + Main Encoder In Device Mode = Scrolls through the Parameter Banks
   - Popup shows selected Device and Bank Number and first and last parameter of the bank

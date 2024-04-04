@@ -1,20 +1,26 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
+from typing import cast
 from ableton.v3.base import listenable_property
+from ableton.v3.live import liveobj_valid
 from ableton.v3.control_surface.components import DeviceBankNavigationComponent
 from ableton.v3.control_surface.components import DeviceComponent as DeviceComponentBase
 from ableton.v3.control_surface.components import SimpleDeviceNavigationComponent
-from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl
+from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl,ToggleButtonControl
 from ableton.v3.control_surface.display import Renderable
 from .PythonBridge import dispatch_hotkey
 from .Settings import PY_TOGGLE_WRENCH, IS_MAC,ENABLE_ROUNDTRIP_BANKING_PARAM
-
+#from .Log import log
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
     wrench_toggle_button = ButtonControl()
+    device_button = ToggleButtonControl()
+
 
     def __init__(self, *a, **k):
         super(DeviceControlsComponent, self).__init__(*a, **k)
+        self.locked_to_device= False
+        self.locked_device_name = ""
 
     def set_wrench_toggle_button(self, button):
         self.wrench_toggle_button.set_control_element(button)
@@ -31,6 +37,42 @@ class DeviceControlsComponent(DeviceComponentBase,
                 dispatch_hotkey("command+alt+p")
             else:
                 dispatch_hotkey("ctrl+alt+p")
+
+    @device_button.toggled
+    def device_button(self, *_):
+        pass
+    @device_button.pressed
+    def device_button(self, *_):
+        pass
+
+    @device_button.double_clicked
+    def device_button(self, *k):
+        #This is a fix if you unlocked on an empty track and want to lock the device again that was previously locked
+        if liveobj_valid(self.device):
+            if self.locked_device_name == cast(str, self.device.name) and not self.locked_to_device:
+                self._toggle_lock()
+                self._toggle_lock()
+                self.locked_to_device = True
+                self.notify(self.notifications.Device.lock, cast(str, self.device.name),False)
+                self._show_message(f"Device Lock On {self.locked_device_name}")
+                return
+
+        if not self.locked_to_device :
+            if liveobj_valid(self.device):
+                self._toggle_lock()
+                self.notify(self.notifications.Device.lock, cast(str, self.device.name),True)
+                self.locked_device_name = cast(str, self.device.name)
+                self._show_message(f"Device Lock On {self.locked_device_name}")
+                self.locked_to_device = True
+        else:
+            self._device_provider.unlock_from_device()
+            self.locked_to_device = False
+            self._show_message(f"Device Lock Off {self.locked_device_name}")
+
+        self.update()
+
+    def set_part_toggle_button(self, button):
+        self.part_toggle_button.set_control_element(button)
 
 
 

@@ -35,6 +35,11 @@ TAP_PADS_MUTE_SOLO = True
 # focus This will only work if you are in Device Control Mode not in Track
 # Control Mode
 TAP_DEVICE_NAVIGATION = True
+############## PART BUTTON FEATURES ##############
+
+# If you want to use double click on the Part button to lock the device set this to True
+ENABLE_DOUBLE_PART_DEVICE_LOCK = True
+
 
 ############## PYTHON BASED FEATURES ##############
 # If you can run python3 scripts on your system set this to True

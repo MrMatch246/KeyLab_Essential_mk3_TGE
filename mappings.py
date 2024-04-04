@@ -73,8 +73,7 @@ def create_mappings(control_surface):
         support_momentary_mode_cycling=False,
         cycle_mode_button="context_button_0", device=dict(component="Device",
                                                           parameter_controls="continuous_controls",
-                                                          wrench_toggle_button="wrench_toggle_button",
-                                                          bank_scroll_encoder="display_encoder_button_part_shifted"),
+                                                          ),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders",
                    track_select_buttons="pad_bank_a_part_shifted",
@@ -110,6 +109,9 @@ def create_mappings(control_surface):
             "master_track_volume_control"] = "fader_9"
         mappings["Continuous_Control_Modes"]["mixer"][
             "prehear_volume_control"] = "encoder_9"
+
+    if ENABLE_DOUBLE_PART_DEVICE_LOCK:
+        mappings["Continuous_Control_Modes"]["device"]["device_button"] = "part_button"
 
     return mappings
 
