@@ -13,7 +13,7 @@ from ableton.v3.control_surface.components.scroll import ScrollComponent,Scrolla
 from ableton.v3.control_surface.controls import ButtonControl,StepEncoderControl
 from .PythonBridge import dispatch_hotkey
 from .Settings import PY_SAVE_PROJECT,IS_MAC , ENABLE_ROUNDTRIP_BANKING_TRACK ,ENCODER_TRACK_BANK_TRACKS_PER_CLICK
-from .Log import log
+#from .Log import log
 
 class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     part_toggle_button = ButtonControl()
@@ -52,7 +52,6 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     @bank_toggle_button.pressed
     def bank_toggle_button(self, _):
         self.bank_bank_toggle_button._is_on = not self.bank_bank_toggle_button._is_on
-        log(f"bank_toggle_button: {self.bank_toggle_button._is_on}")
 
     @bank_toggle_button.double_clicked
     def bank_bank_toggle_button(self, _):

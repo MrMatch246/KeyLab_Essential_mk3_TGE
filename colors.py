@@ -9,7 +9,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from ableton.v3.control_surface import BasicColors
 from ableton.v3.control_surface.elements import FallbackColor, create_rgb_color
 from ableton.v3.live import liveobj_color_to_midi_rgb_values
-from .Log import log
+#from .Log import log
 def create_color(r, g, b):
     return create_rgb_color((r, g, b, 32))
 
