@@ -8,6 +8,8 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 - Fader 9 Controls Master in Tracks Mode (context button 0) and current track in device mode
   - Knob 9 Controls Prehear Volume in Tracks Mode (context button 0) and current track Panning in device mode
 
+- You can set Rewind and FastForward Speed in the Settings.py file (currently set to 4 instead of 1)
+
 - Enabled Auto Arm
 
 - Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:  

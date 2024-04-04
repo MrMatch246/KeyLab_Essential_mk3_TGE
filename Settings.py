@@ -80,13 +80,14 @@ ENCODER_TRACK_BANK_TAP = True
 ENABLE_ROUNDTRIP_BANKING_TRACK = False
 
 #Switch encoder and up down buttons for track and scene navigation
-SCENE_TRACK_NAVIGATION_SWITCH = True
+SCENE_TRACK_NAVIGATION_SWITCH = False
 
 #Set this to True if you want the encoder to scroll in the opposite direction
 #for the Pads
 ENCODER_TRACK_DIRECTION_INVERTED = False
 
-
+#Sets the Speed of the Fast Forward and Rewind Buttons
+REWIND_FORWARD_SPEED = 4
 
 
 

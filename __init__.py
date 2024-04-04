@@ -26,6 +26,7 @@ from .mappings import create_mappings
 from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
     REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
+from .transport import TransportComponent
 
 
 def get_capabilities():
@@ -57,7 +58,8 @@ class Specification(ControlSurfaceSpecification):
     goodbye_messages = (DISCONNECTION_MESSAGE,)
     component_map = {'Device': partial(DeviceControlsComponent, bank_size=16,
                                        bank_navigation_component_type=DeviceBankToggleComponent),
-                     'Drum_Group': DrumGroupComponent, 'Mixer': MixerComponent}
+                     'Drum_Group': DrumGroupComponent, 'Mixer': MixerComponent,
+                     'Transport': TransportComponent}
     display_specification = display_specification
 
 
