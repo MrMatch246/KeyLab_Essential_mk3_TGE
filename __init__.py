@@ -16,8 +16,10 @@ from ableton.v3.control_surface import ControlSurface, \
 from ableton.v3.control_surface.capabilities import CONTROLLER_ID_KEY, NOTES_CC, \
     PORTS_KEY, SCRIPT, controller_id, inport, outport
 
+from .PythonBridge import KeystrokeProxie, setup_requirements, start_server
+from .Settings import I_HAVE_PYTHON_3, ENABLE_AUTO_ARM
 from .colors import Rgb, Skin
-from .devices import DeviceBankToggleComponent
+from .devices import DeviceBankToggleComponent, DeviceControlsComponent
 from .display import display_specification
 from .elements import Elements
 from .mappings import create_mappings
@@ -25,26 +27,16 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
     REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
 
-from .Settings import I_HAVE_PYTHON_3, ENABLE_AUTO_ARM
-from .PythonBridge import KeystrokeProxie, setup_requirements, start_server
-from .devices import DeviceControlsComponent
-
-
 
 def get_capabilities():
-    return {CONTROLLER_ID_KEY: (controller_id(vendor_id=7285,
-                          product_ids=[
-                         588, 652, 716],
-                          model_name=[
-                         "KL Essential 49 mk3",
-                         "KL Essential 61 mk3",
-                         "KL Essential 88 mk3"])),
+    return {CONTROLLER_ID_KEY: (
+        controller_id(vendor_id=7285, product_ids=[588, 652, 716],
+                      model_name=["KL Essential 49 mk3", "KL Essential 61 mk3",
+                                  "KL Essential 88 mk3"])),
 
-     PORTS_KEY: [
-                 inport(props=[NOTES_CC, SCRIPT]),
-                 inport(props=[NOTES_CC]),
-                 outport(props=[NOTES_CC, SCRIPT]),
-                 outport(props=[NOTES_CC])]}
+        PORTS_KEY: [inport(props=[NOTES_CC, SCRIPT]), inport(props=[NOTES_CC]),
+                    outport(props=[NOTES_CC, SCRIPT]),
+                    outport(props=[NOTES_CC])]}
 
 
 def create_instance(c_instance):
@@ -63,11 +55,9 @@ class Specification(ControlSurfaceSpecification):
     create_mappings_function = create_mappings
     hello_messages = (CONNECTION_MESSAGE, REQUEST_PROGRAM_MESSAGE)
     goodbye_messages = (DISCONNECTION_MESSAGE,)
-    component_map = {'Device':partial(DeviceControlsComponent,
-       bank_size=16,
-       bank_navigation_component_type=DeviceBankToggleComponent),
-     'Drum_Group':DrumGroupComponent,
-     'Mixer':MixerComponent}
+    component_map = {'Device': partial(DeviceControlsComponent, bank_size=16,
+                                       bank_navigation_component_type=DeviceBankToggleComponent),
+                     'Drum_Group': DrumGroupComponent, 'Mixer': MixerComponent}
     display_specification = display_specification
 
 

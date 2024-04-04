@@ -41,6 +41,7 @@ BUTTON_ID_TO_SYSEX_ID = {
   45: 25,
   46: 26,
   47: 27,
+  118: 1,
   119: 7}
 PAD_ID_TO_SYSEX_ID = {
   36: 32,

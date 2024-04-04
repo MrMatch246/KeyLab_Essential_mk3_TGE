@@ -6,7 +6,6 @@
 # Compiled at: 2024-01-31 17:08:32
 # Size of source mod 2**32: 6208 bytes
 from __future__ import absolute_import, print_function, unicode_literals
-
 from dataclasses import dataclass
 from enum import Enum
 from functools import partial
@@ -16,6 +15,7 @@ from ableton.v3.control_surface.display import DefaultNotifications, \
     DisplaySpecification, Text, view
 from ableton.v3.live import display_name, is_arrangement_view_active, \
     is_track_armed, liveobj_name, song
+from .Settings import ENCODER_TRACK_BANK_TRACKS_PER_CLICK
 
 Line1Text = partial(Text, max_width=11, justification=(Text.Justification.NONE))
 Line2Text = partial(Text, max_width=20, justification=(Text.Justification.NONE))
@@ -120,15 +120,24 @@ def create_root_view() -> view.View[Optional[Content]]:
             state.device_bank_navigation.has_changed_bank_index):
             popup = None
         else:
-            if state.continuous_control_modes.selected_mode == "device":
-
+            if state.continuous_control_modes.selected_mode == "device" and \
+                state.device_bank_navigation.has_changed_bank_index:
                 (first, last) = get_first_last_param_name(state)
                 popup = (get_device_name(state), f"{first} - {last}")
             else:
                 (first, last) = get_first_last_track_name(state)
                 popup = (
-                    f"Tracks {state.mixer_session_ring.offset[0] // 8 + 1}",
+                    f"Tracks {state.mixer_session_ring.offset[0] // ENCODER_TRACK_BANK_TRACKS_PER_CLICK + 1}",
                     f"{first} - {last}")
+        if state.elements.tap_button.is_pressed:
+            (first, last) = get_first_last_track_name(state)
+            popup = (
+                f"Tracks {state.mixer_session_ring.offset[0] // ENCODER_TRACK_BANK_TRACKS_PER_CLICK + 1}",
+                f"{first} - {last}")
+
+
+
+
 
         if state.continuous_control_modes.selected_mode == "mixer":
             icon_1 = Icon(IconType.MIXER,IconState.OPENED)

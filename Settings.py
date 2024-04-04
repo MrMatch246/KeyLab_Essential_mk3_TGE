@@ -61,14 +61,23 @@ ENABLE_ROUNDTRIP_BANKING_PARAM = True
 # Use The Main Encoder + keeping Part pressed to scroll through the track if
 # in Track Control Mode
 ENCODER_TRACK_BANK = True
+ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 4
 
 # Set this to false if you don't want TAP and the encoder to also show the tracks
 ENCODER_TRACK_BANK_TAP = True
 
-
 # Set this to false if you don't want the encoder to jump to the first Tracks
 # Page after the last bank
-ENABLE_ROUNDTRIP_BANKING_TRACK = True
+ENABLE_ROUNDTRIP_BANKING_TRACK = False
+
+
+
+
+
+
+
+
+
 
 ### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
 if not TAP_SHIFT_MODE:
@@ -80,3 +89,6 @@ if not TAP_SHIFT_MODE:
 if not I_HAVE_PYTHON_3:
     PY_TOGGLE_WRENCH = False
     PY_SAVE_PROJECT = False
+
+if not ENCODER_TRACK_BANK:
+    ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 8

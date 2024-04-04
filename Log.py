@@ -16,6 +16,7 @@ with open(LOG_FILE, 'a') as f:
     f.write('====================\n')
 log_num = 0
 
+
 def log(message):
     global log_num
     temp = ''

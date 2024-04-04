@@ -52,14 +52,14 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
     def scroll_encoder(self, value, _):
         if self._bank_provider and self._bank_provider.bank_count() > 1:
             if ENABLE_ROUNDTRIP_BANKING_PARAM:
-                if value < 0:
+                if value > 0:
                     self.scroll_up()
                 else:
                     self.scroll_down()
             else:
-                if value > 0 and self.can_scroll_down():
+                if value < 0 and self.can_scroll_down():
                     self.scroll_down()
-                if value < 0 and self.can_scroll_up():
+                if value > 0 and self.can_scroll_up():
                     self.scroll_up()
 
     def scroll_up(self):

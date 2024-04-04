@@ -7,14 +7,14 @@
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
 
-from .Settings import TAP_SHIFT_MODE, TAP_DUAL_MODE, \
-    TAP_CONTEXT_1_IS_SOLO, TAP_PADS_MUTE_SOLO, TAP_DEVICE_NAVIGATION, \
-    PY_SAVE_PROJECT, ENCODER_DEVICE_BANK, ENCODER_TRACK_BANK, ENCODER_TRACK_BANK_TAP
+from .Settings import *
 
 
-def create_mappings(_):
+def create_mappings(control_surface):
     mappings = {}
-    mappings["Modifier_Background"] = dict(shift="tap_button",part="part_button")
+    mappings["Modifier_Background"] = dict(shift="tap_button",
+                                           part="part_button",
+                                           bank="bank_button")
     mappings["Transport"] = dict(play_button="play_button",
                                  stop_button="stop_button",
                                  metronome_button="metronome_button",
@@ -36,18 +36,20 @@ def create_mappings(_):
 
     mixer = dict(target_track_arm_button="context_button_1",
                  target_track_volume_control="fader_9",
-                 target_track_pan_control="encoder_9")
+                 target_track_pan_control="encoder_9",
+                 bank_toggle_button="bank_button",
+                 )
 
     if TAP_CONTEXT_1_IS_SOLO:
         mixer["target_track_solo_button"] = "target_track_solo_button"
 
     if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"
-        mixer["solo_buttons"] = "pad_bank_b_shifted"
+        mixer[
+            "solo_buttons"] = "pad_bank_b_shifted"  # mixer["track_select_buttons"] = "pad_bank_b_row1_tap_shifted"
 
     if PY_SAVE_PROJECT:
-        mixer[
-            "save_project_button"] = "save_project_button"
+        mixer["save_project_button"] = "save_project_button"
 
     if ENCODER_TRACK_BANK_TAP:
         mixer["scroll_encoder"] = "display_encoder_button_tap_shifted"
@@ -65,11 +67,8 @@ def create_mappings(_):
                                                           bank_scroll_encoder="display_encoder_button_part_shifted"),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders",
-                   scroll_encoder="display_encoder_button_part_shifted",
-                   master_track_volume_control="fader_9",
-                   prehear_volume_control="encoder_9",
-                   mute_buttons="pad_bank_a_part_shifted",
-                   solo_buttons="pad_bank_b_part_shifted"
+                   track_select_buttons="pad_bank_a_part_shifted",
+                   arm_buttons="pad_bank_b_part_shifted",
                    )
     )
     if ENCODER_DEVICE_BANK:
@@ -77,20 +76,30 @@ def create_mappings(_):
             "bank_scroll_encoder"] = "display_encoder_button_part_shifted"
     else:
         mappings["Continuous_Control_Modes"]["device"][
-            "bank_toggle_button"] = "part_button"
+            "part_toggle_button"] = "part_button"
 
     if ENCODER_TRACK_BANK:
         mappings["Continuous_Control_Modes"]["mixer"][
             "scroll_encoder"] = "display_encoder_button_part_shifted"
     else:
         mappings["Continuous_Control_Modes"]["mixer"][
-            "bank_toggle_button"] = "part_button"
+            "part_toggle_button"] = "part_button"
 
     if TAP_DEVICE_NAVIGATION:
         mappings["Continuous_Control_Modes"]["device"][
             "prev_button"] = "previous_device_button"
         mappings["Continuous_Control_Modes"]["device"][
             "next_button"] = "next_device_button"
+
+    if PY_TOGGLE_WRENCH:
+        mappings["Continuous_Control_Modes"]["device"][
+            "wrench_toggle_button"] = "wrench_toggle_button"
+
+    if FADER_9_IS_MASTER:
+        mappings["Continuous_Control_Modes"]["mixer"][
+            "master_track_volume_control"] = "fader_9"
+        mappings["Continuous_Control_Modes"]["mixer"][
+            "prehear_volume_control"] = "encoder_9"
 
     return mappings
 

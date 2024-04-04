@@ -9,13 +9,20 @@ from __future__ import absolute_import, print_function, unicode_literals
 from ableton.v3.control_surface import BasicColors
 from ableton.v3.control_surface.elements import FallbackColor, create_rgb_color
 from ableton.v3.live import liveobj_color_to_midi_rgb_values
-
+from .Log import log
 def create_color(r, g, b):
     return create_rgb_color((r, g, b, 32))
 
 
 def create_blinking_color(r, g, b):
     return create_rgb_color((r, g, b, 2))
+
+def create_dynamic_color_bright(x):
+    return create_color(*liveobj_color_to_midi_rgb_values(x))
+
+def create_dynamic_color_dark(x):
+    color = liveobj_color_to_midi_rgb_values(x)
+    return create_color(*(int(c / 8) for c in color))
 
 
 class Rgb:
@@ -117,6 +124,10 @@ class Skin:
         SoloOff = Rgb.BLUE_THIRD
         MuteOn = Rgb.YELLOW
         MuteOff = Rgb.YELLOW_LOW
+        Selected = create_dynamic_color_bright
+        NotSelected = create_dynamic_color_dark
+        SoloButton = Rgb.BLUE
+        MuteButton = Rgb.YELLOW
 
 
     class Session:
@@ -140,14 +151,16 @@ class Skin:
         PadPressed = Rgb.WHITE
 
     class Banking:
-        PageOne = Rgb.WHITE_HALF
-        PageTwo = Rgb.WHITE
+        PageOne = Rgb.RED_HALF
+        PageTwo = Rgb.RED
 
     class ModifierBackground:
         Shift = Rgb.OCEAN_HALF
         ShiftPressed = Rgb.OCEAN
         Part = Rgb.OCEAN_HALF
         PartPressed = Rgb.OCEAN
+        Bank = Rgb.RED_HALF
+        BankPressed = Rgb.RED
 
 
     class ContinuousControlModes:
@@ -157,6 +170,8 @@ class Skin:
 
         class Mixer:
             On = Rgb.GREEN_HALF
+            Selected = Rgb.WHITE
+            NotSelected = lambda x: create_color(*liveobj_color_to_midi_rgb_values(x))
             Off = Rgb.OFF
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/colors.pyc

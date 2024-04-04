@@ -15,7 +15,6 @@ from .display import Line1Text, Line2Text
 
 from .Settings import *
 
-
 def create_rgb_button(identifier, name=None, **k):
     return create_sysex_sending_button(
  identifier,
@@ -79,7 +78,10 @@ class Elements(ElementsBase):
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")
         self.add_button(117, "Display_Encoder_Button")
-        self.add_button(118, "Bank_Button")
+
+        #self.add_button(118, "Bank_Button")
+        self.add_modifier_button(118, "Bank_Button")
+
 
         if ENCODER_DEVICE_BANK:
             self.add_modifier_button(119, "Part_Button")
@@ -88,7 +90,6 @@ class Elements(ElementsBase):
 
         if PY_TOGGLE_WRENCH:
             self.add_modified_control(control=(self.part_button),modifier=(self.tap_button),name="wrench_toggle_button")
-
 
 
         self.add_matrix([
@@ -102,10 +103,12 @@ class Elements(ElementsBase):
             "Pad_Bank_B", element_factory=create_rgb_pad, channels=10)
         if TAP_SHIFT_MODE and TAP_PADS_MUTE_SOLO:
             #reorder so that pad 5 is the first button
+
             row=[self.pad_bank_b._orig_buttons[0][i] for i in [4,5,6,7,0,1,2,3]]
             pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
             self.add_modified_control(control=(self.pad_bank_a),modifier=(self.tap_button),name="pad_bank_a_shifted")
             self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.tap_button),name="pad_bank_b_shifted")
+
             self.add_modified_control(control=(self.pad_bank_a),modifier=(self.part_button),name="pad_bank_a_part_shifted")
             self.add_modified_control(control=(pad_bank_b_reordered),modifier=(self.part_button),name="pad_bank_b_part_shifted")
 
