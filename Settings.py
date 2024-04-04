@@ -71,6 +71,10 @@ ENCODER_TRACK_BANK_TAP = True
 ENABLE_ROUNDTRIP_BANKING_TRACK = False
 
 
+#Switch encoder and up down buttons for track and scene navigation
+SCENE_TRACK_NAVIGATION_SWITCH = True
+
+
 
 
 

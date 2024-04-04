@@ -30,9 +30,15 @@ def create_mappings(control_surface):
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
                                  redo_button="redo_button")
     mappings["Clip_Actions"] = dict(quantize_button="punch_button")
-    mappings["View_Control"] = dict(prev_track_button="context_button_2",
-                                    next_track_button="context_button_3",
-                                    scene_encoder="display_encoder")
+    mappings["View_Control"] = {}
+    if SCENE_TRACK_NAVIGATION_SWITCH:
+        mappings["View_Control"]["track_encoder"] = "display_encoder"
+        mappings["View_Control"]["next_scene_button"] = "context_button_3"
+        mappings["View_Control"]["prev_scene_button"] = "context_button_2"
+    else:
+        mappings["View_Control"]["prev_track_button"] = "context_button_2"
+        mappings["View_Control"]["next_track_button"] = "context_button_3"
+        mappings["View_Control"]["scene_encoder"] = "display_encoder"
 
     mixer = dict(target_track_arm_button="context_button_1",
                  target_track_volume_control="fader_9",

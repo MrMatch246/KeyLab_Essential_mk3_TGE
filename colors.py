@@ -110,6 +110,8 @@ class Skin:
     class ViewControl:
         TrackPressed = Rgb.WHITE
         Track = Rgb.WHITE_HALF
+        Scene = Rgb.WHITE_HALF
+        ScenePressed = Rgb.WHITE
 
     class ViewToggle:
         SessionOn = Rgb.WHITE
