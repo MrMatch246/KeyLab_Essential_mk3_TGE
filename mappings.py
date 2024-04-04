@@ -11,7 +11,7 @@ from .Settings import *
 
 
 def create_mappings(control_surface):
-    mappings = {}
+    mappings = dict()
     mappings["Modifier_Background"] = dict(shift="tap_button",
                                            part="part_button",
                                            bank="bank_button")
@@ -30,6 +30,8 @@ def create_mappings(control_surface):
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
                                  redo_button="redo_button")
     mappings["Clip_Actions"] = dict(quantize_button="punch_button")
+
+
     mappings["View_Control"] = {}
     if SCENE_TRACK_NAVIGATION_SWITCH:
         mappings["View_Control"]["track_encoder"] = "display_encoder"
@@ -46,7 +48,6 @@ def create_mappings(control_surface):
                  bank_toggle_button="bank_button",
                  )
 
-
     if TAP_CONTEXT_0_IS_MUTE:
         mixer["target_track_mute_button"] = "target_track_mute_button"
 
@@ -55,8 +56,7 @@ def create_mappings(control_surface):
 
     if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"
-        mixer[
-            "solo_buttons"] = "pad_bank_b_shifted"  # mixer["track_select_buttons"] = "pad_bank_b_row1_tap_shifted"
+        mixer["solo_buttons"] = "pad_bank_b_shifted"
 
     if PY_SAVE_PROJECT:
         mixer["save_project_button"] = "save_project_button"

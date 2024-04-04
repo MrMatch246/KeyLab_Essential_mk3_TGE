@@ -12,7 +12,7 @@ from ableton.v3.control_surface.components import SessionRingComponent
 from ableton.v3.control_surface.components.scroll import ScrollComponent,Scrollable
 from ableton.v3.control_surface.controls import ButtonControl,StepEncoderControl
 from .PythonBridge import dispatch_hotkey
-from .Settings import PY_SAVE_PROJECT,IS_MAC , ENABLE_ROUNDTRIP_BANKING_TRACK ,ENCODER_TRACK_BANK_TRACKS_PER_CLICK
+from .Settings import *
 #from .Log import log
 
 class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
@@ -83,15 +83,17 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     @scroll_encoder.value
     def scroll_encoder(self, value, _):
         if len(self._session_ring.tracks_to_use()) > 8:
+            down = (value < 0) != ENCODER_TRACK_DIRECTION_INVERTED
+            #log(f"scroll_encoder: {value} down: {down}")
             if ENABLE_ROUNDTRIP_BANKING_TRACK:
-                if value >= 0:
+                if not down:
                     self.scroll_up()
                 else:
                     self.scroll_down()
             else:
-                if value < 0 and self.can_scroll_down():
+                if down and self.can_scroll_down():
                     self.scroll_down()
-                if value > 0 and self.can_scroll_up():
+                if not down and self.can_scroll_up():
                     self.scroll_up()
 
     def can_scroll_up(self):
