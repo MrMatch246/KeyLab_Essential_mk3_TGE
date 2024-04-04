@@ -89,6 +89,10 @@ ENCODER_TRACK_DIRECTION_INVERTED = False
 #Sets the Speed of the Fast Forward and Rewind Buttons
 REWIND_FORWARD_SPEED = 4
 
+# Set this to True if you the Play button to pause/continue on press
+# and start from song marker on longer press
+ENABLE_PLAY_PAUSE_BUTTON = True
+
 
 
 

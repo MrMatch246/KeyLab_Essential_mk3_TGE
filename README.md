@@ -10,6 +10,8 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
 
 - You can set Rewind and FastForward Speed in the Settings.py file (currently set to 4 instead of 1)
 
+- Play Button can work as Play/Pause Button
+
 - Enabled Auto Arm
 
 - Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:  
