@@ -51,7 +51,8 @@ Or anything! I am open to suggestions and will try to implement them as best as 
   - TAP + Part button Toggles Plugin Window (Wrench Icon) 
     - You need to have the windows opened before you can toggle close them (Ctrl + Alt + P)
   - TAP + Save Saves the current project!!!!!!! (Ctrl + S)
- 
+  
+  - TAP + Loop loops the current selection (Ctrl + L)
 -------------------------
 
 
