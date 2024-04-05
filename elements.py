@@ -55,13 +55,6 @@ class Elements(ElementsBase):
             self.add_button(23, "Tap_Button")
 
         self.add_button(24, "Loop_Button")
-
-        if PY_ENABLE_LOOP_SELECTION:
-            self.add_modified_control(control=(self.loop_button),
-                                      modifier=(self.tap_button),
-                                      name="loop_selection_button")
-
-
         self.add_button(25, "Rewind_Button")
         self.add_button(26, "Fastforward_Button")
 

@@ -18,7 +18,8 @@ class TransportComponent(TransportComponentBase):
     stop_button = ButtonControl(color="Transport.StopOff",
                             on_color="Transport.StopOn",
                             pressed_color=(OptionalSkinEntry("Transport.StopPressed")))
-    loop_selection_button = ButtonControl()
+    loop_button = ToggleButtonControl(color="Transport.LoopOff",
+                                      on_color="Transport.LoopOn")
     def __init__(self, *a, **k):
         super(TransportComponent, self).__init__(*a, **k)
         self.stopped = False
@@ -53,8 +54,8 @@ class TransportComponent(TransportComponentBase):
             self.stopped = True
 
     if PY_ENABLE_LOOP_SELECTION:
-        @loop_selection_button.pressed
-        def loop_selection_button(self, _):
+        @loop_button.pressed_delayed
+        def loop_button(self, button):
             if IS_MAC:
                 dispatch_hotkey("command+l")
             else:

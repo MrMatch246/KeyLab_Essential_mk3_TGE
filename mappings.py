@@ -26,9 +26,6 @@ def create_mappings(control_surface):
     if TAP_SHIFT_MODE is TAP_DUAL_MODE:
         mappings["Transport"]["tap_tempo_button"] = "tap_button"
 
-    if PY_ENABLE_LOOP_SELECTION:
-        mappings["Transport"]["loop_selection_button"] = "loop_selection_button"
-
     mappings["View_Based_Recording"] = dict(record_button="record_button")
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
                                  redo_button="redo_button")
