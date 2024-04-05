@@ -83,12 +83,12 @@ class Elements(ElementsBase):
         if TAP_CONTEXT_0_IS_MUTE:
             self.add_modified_control(control=(self.context_button_0),
                                       modifier=(self.tap_button),
-                                      name="target_track_mute_button")
+                                      name="context_button_0_tap_shifted")
 
         if TAP_CONTEXT_1_IS_SOLO:
             self.add_modified_control(control=(self.context_button_1),
                                       modifier=(self.tap_button),
-                                      name="target_track_solo_button")
+                                      name="context_button_1_tap_shifted")
 
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")

@@ -49,10 +49,16 @@ def create_mappings(control_surface):
                  )
 
     if TAP_CONTEXT_0_IS_MUTE:
-        mixer["target_track_mute_button"] = "target_track_mute_button"
+        mixer["target_track_mute_button"] = "context_button_0_tap_shifted"
 
     if TAP_CONTEXT_1_IS_SOLO:
-        mixer["target_track_solo_button"] = "target_track_solo_button"
+        if CONTEXT_1_SWITCH_SOLO_ARM:
+            mixer["target_track_arm_button"] = "context_button_1_tap_shifted"
+        else:
+            mixer["target_track_solo_button"] = "context_button_1_tap_shifted"
+    if CONTEXT_1_SWITCH_SOLO_ARM:
+        mixer["target_track_solo_button"] = "context_button_1"
+
 
     if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"

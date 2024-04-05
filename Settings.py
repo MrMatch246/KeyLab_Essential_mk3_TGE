@@ -10,6 +10,15 @@ ENABLE_AUTO_ARM = True
 # Will also set Knob 9 to Cue Volume instead of current track pan
 FADER_9_IS_MASTER = True
 
+#Sets the Speed of the Fast Forward and Rewind Buttons
+REWIND_FORWARD_SPEED = 4
+
+# Set this to True if you the Play button to pause/continue on press
+# and start from song marker on longer press
+ENABLE_PLAY_PAUSE_BUTTON = True
+
+
+
 ############## TAP BUTTON FEATURES ##############
 # If you want to use the Tap button as a shift button set this to True
 # if you disable this you cant use the shift functionalities of the Tap button
@@ -26,6 +35,10 @@ TAP_CONTEXT_0_IS_MUTE = True
 # If you want to use the Context 1 button that usually arms the track to solo
 # it when used with the Tap button set this to True
 TAP_CONTEXT_1_IS_SOLO = True
+
+#If you want to have the Context button 1 to Solo by default and TAP + Context 1 to Arm set this to True
+CONTEXT_1_SWITCH_SOLO_ARM = True
+
 
 # Using Tap as shift button and the Pads will either mute or solo Tracks
 # Bank A will mute and Bank B will solo
@@ -86,12 +99,7 @@ SCENE_TRACK_NAVIGATION_SWITCH = True
 #for the Pads
 ENCODER_TRACK_DIRECTION_INVERTED = False
 
-#Sets the Speed of the Fast Forward and Rewind Buttons
-REWIND_FORWARD_SPEED = 4
 
-# Set this to True if you the Play button to pause/continue on press
-# and start from song marker on longer press
-ENABLE_PLAY_PAUSE_BUTTON = True
 
 
 
