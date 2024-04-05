@@ -81,3 +81,8 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
     ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/187ef3db-4d02-4608-b62f-8691b9d2b66a)  
     With input and output set to "KeyLab Essential mk3 MIDI" and the control surface set to "KeyLab Essential mk3 TGE"
     the third row is "KeyLab Essential mk3 ALV" as input and "KeyLab Essential mk3 DINTHRU" as output without the control surface set
+
+
+IMPORTANT!
+The Bank Button should show the assignment of the pads (Solo/Mute) But depending on the Bank selection on startup this might be inverted (cant change that, hardware problem)
+If that is the case, double click te bank button to switch its color
