@@ -27,6 +27,7 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
     REQUEST_PROGRAM_MESSAGE
 from .mixer import MixerComponent
 from .transport import TransportComponent
+from .target_track import TargetTrackComponent
 
 
 def get_capabilities():
@@ -51,6 +52,7 @@ class Specification(ControlSurfaceSpecification):
     num_scenes = 2
     link_session_ring_to_track_selection = True
     link_session_ring_to_scene_selection = True
+    target_track_component_type = TargetTrackComponent
     include_auto_arming = True
     identity_response_id_bytes = (0, 32, 107, 2, 0, 5)
     create_mappings_function = create_mappings

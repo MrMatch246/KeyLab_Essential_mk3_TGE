@@ -1,9 +1,10 @@
 
 from ableton.v3.control_surface.components import TransportComponent as TransportComponentBase
-from ableton.v3.control_surface.controls import ButtonControl
+from ableton.v3.control_surface.controls import ButtonControl,ToggleButtonControl
 from ableton.v3.control_surface.skin import OptionalSkinEntry
 from ableton.v3.live import get_bar_length, move_current_song_time
 from .Settings import *
+from .PythonBridge import dispatch_hotkey
 
 class TransportComponent(TransportComponentBase):
     seek_dict = {
@@ -17,6 +18,7 @@ class TransportComponent(TransportComponentBase):
     stop_button = ButtonControl(color="Transport.StopOff",
                             on_color="Transport.StopOn",
                             pressed_color=(OptionalSkinEntry("Transport.StopPressed")))
+    loop_selection_button = ButtonControl()
     def __init__(self, *a, **k):
         super(TransportComponent, self).__init__(*a, **k)
         self.stopped = False
@@ -49,3 +51,11 @@ class TransportComponent(TransportComponentBase):
         def stop_button(self, _):
             self.song.stop_playing()
             self.stopped = True
+
+    if PY_ENABLE_LOOP_SELECTION:
+        @loop_selection_button.pressed
+        def loop_selection_button(self, _):
+            if IS_MAC:
+                dispatch_hotkey("command+l")
+            else:
+                dispatch_hotkey("ctrl+l")

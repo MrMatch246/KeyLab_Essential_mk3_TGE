@@ -72,6 +72,10 @@ PY_TOGGLE_WRENCH = True
 # Save your Project! with the Tap + Save Button!!!
 PY_SAVE_PROJECT = True
 
+# If you want to Loop the selected area with the Tap + Loop Button
+PY_ENABLE_LOOP_SELECTION = True
+
+
 # ############# ENCODER USAGE ############## Use The Main Encoder + keeping
 # Part pressed to scroll through the device parameter Banks
 ENCODER_DEVICE_BANK = True
