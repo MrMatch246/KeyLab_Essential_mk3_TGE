@@ -2,6 +2,8 @@
 ------------------------------------
 
 Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fixes and the cool features that arturia just overlooked! 
+As i am more of an Arrangement Person, please let me know if there is anything in the session direction that would be useful! 
+Or anything! I am open to suggestions and will try to implement them as best as i can!
 
 ## Current Features (You can choose which to use):
 
@@ -21,6 +23,7 @@ Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fi
     - TAP + Context button 0 (The one that switches Track/Device mode) now MUTEs the Current Track
      
     - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
+      - You can also Switch the Solo and Arm functionality so that a plain press of the button will solo the track and a press with TAP will arm the track.
 
     - TAB + PAD Bank A = Mute Tracks
 
