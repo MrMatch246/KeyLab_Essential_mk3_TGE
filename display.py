@@ -23,13 +23,71 @@ Line2Text = partial(Text, max_width=20, justification=(Text.Justification.NONE))
 
 class IconType(Enum):
     NONE = 0
-    LIVE = 71
-    MIXER = 63
-    ARM = 66
+    ARTURIA = 1
+    RETURN = 2
+    BIG_BASS = 3
+    SMALL_BASS = 4
+    BIG_BRASS = 5
+    SMALL_BRASS = 6
+    BLACK_KEYS_MAYBE = 7
+    DAW = 8
+    CLOCK = 9
+    X_ICON = 10
+    BIG_DRUMS = 11
+    SMALL_DRUMS = 12
+    BIG_ELECTRIC_PIANO = 13
+    SMALL_ELECTRIC_PIANO = 14
+    PROCESSOR = 15
+    BIG_KEYS = 24
+    SMALL_KEYS = 25
+    BIG_LEAD = 26
+    SMALL_LEAD = 27
+    FILLED_HEART = 28
+    EMPTY_HEART = 29
+    MIDI = 30
+    BIG_ORGAN = 31
+    SMALL_ORGAN = 32
+    BIG_PAD = 33
+    SMALL_PAD = 34
+    WHITE_ARROW_LEFT = 35
+    WHITE_ARROW_RIGHT = 36
+    BLACK_ARROW_LEFT = 37
+    BLACK_ARROW_RIGHT = 38
+    EDIT_PENCIL = 39
+    BIG_GRAND_PIANO = 40
+    SMALL_GRAND_PIANO = 41
+    SMALL_SQUARE_ARROW_CLOCKWISE = 42
+    BIG_CYCLE_ARROW_COUNTER_CLOCK = 43
+    CYCLE_ARROW_COUNTER_CLOCK = 44
+    BIG_SEQUENCE = 45
+    SMALL_SEQUENCE = 46
+    BIG_SFX = 47
+    SMALL_SFX = 48
+    BIG_STRINGS = 49
+    SMALL_STRINGS = 50
+    TEMPLATE = 51
+    BROKEN_1 = 52
+    BIG_CUSTOM = 53
+    SMALL_CUSTOM = 54
+    BIG_VOCAL = 55
+    SMALL_VOCAL = 56
     DOWN_ARROW = 57
     UP_ARROW = 58
     LEFT_ARROW = 59
     RIGHT_ARROW = 60
+    CHECK_MARK = 61
+    MIXER = 63
+    MAGNIFYING_GLASS = 64
+    BIG_SCALES_BOARD = 65
+    ARM = 66
+    SESSION_RIGHT = 67
+    SESSION_LEFT = 68
+    BITWIG = 69
+    FL_STUDIO = 70
+    LIVE = 71
+    REASON = 72
+    CUBASE = 73
+
 
 
 class IconState(Enum):
