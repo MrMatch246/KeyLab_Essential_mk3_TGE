@@ -63,6 +63,7 @@ def create_mappings(control_surface):
     if TAP_PADS_MUTE_SOLO:
         mixer["mute_buttons"] = "pad_bank_a_shifted"
         mixer["solo_buttons"] = "pad_bank_b_shifted"
+        mixer["shift_button"] = "metronome_solo_button"
 
     if PY_SAVE_PROJECT:
         mixer["save_project_button"] = "save_project_button"

@@ -48,6 +48,13 @@ TAP_PADS_MUTE_SOLO = True
 # focus This will only work if you are in Device Control Mode not in Track
 # Control Mode
 TAP_DEVICE_NAVIGATION = True
+
+
+# Set this to True if you want to use the Tap + the Metronome Button to Solo mulitple tracks
+# on the Solo Pads
+TAP_METRO_SOLO = True
+
+
 ############## PART BUTTON FEATURES ##############
 
 # If you want to use double click on the Part button to lock the device set this to True

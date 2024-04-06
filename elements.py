@@ -67,6 +67,11 @@ class Elements(ElementsBase):
                                       name="next_device_button")
 
         self.add_button(27, "Metronome_Button")
+        if TAP_METRO_SOLO:
+            self.add_modified_control(control=(self.metronome_button),
+                                      modifier=(self.tap_button),
+                                      name="metronome_solo_button")
+
         self.add_button(40, "Save_Button")
 
         if PY_SAVE_PROJECT:
