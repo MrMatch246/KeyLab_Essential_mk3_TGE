@@ -91,6 +91,10 @@ Or anything! I am open to suggestions and will try to implement them as best as 
 - Unzip the downloaded file and copy the "KeyLab_Essential_mk3_TGE-master" folder that is itself CONTAINED in another "KeyLab_Essential_mk3_TGE-master" folder into  the "Remote Scripts" folder
 - IMPORTANT: Rename the "KeyLab_Essential_mk3_TGE-master" folder to "KeyLab_Essential_mk3_TGE"
 - To check if everything went right, open "User Library/Remote Scripts/KeyLab_Essential_mk3_TGE/Settings.py"
+- It should look like this:  
+![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/eba80adf-e9c6-4da0-8ca7-49cc82a475e7)
+
+
 
   
 - Start Live and select it 
