@@ -15,7 +15,7 @@ from ableton.v3.control_surface.display import DefaultNotifications, \
     DisplaySpecification, Text, view
 from ableton.v3.live import display_name, is_arrangement_view_active, \
     is_track_armed, liveobj_name, song
-from .Settings import ENCODER_TRACK_BANK_TRACKS_PER_CLICK
+from .Settings import *
 
 Line1Text = partial(Text, max_width=11, justification=(Text.Justification.NONE))
 Line2Text = partial(Text, max_width=20, justification=(Text.Justification.NONE))
@@ -206,9 +206,16 @@ def create_root_view() -> view.View[Optional[Content]]:
             icon_2 = Icon(IconType.ARM, IconState.FRAMED)
         else:
             icon_2 = Icon(IconType.ARM, IconState.UNFRAMED)
+        if SCENE_TRACK_NAVIGATION_SWITCH:
+            icon_3 = Icon(view_based_content(IconType.UP_ARROW, IconType.UP_ARROW))
+        else:
+            icon_3 = Icon(view_based_content(IconType.LEFT_ARROW, IconType.UP_ARROW))
 
-        icon_3 = Icon(view_based_content(IconType.LEFT_ARROW, IconType.UP_ARROW))
-        icon_4 = Icon(view_based_content(IconType.RIGHT_ARROW, IconType.DOWN_ARROW))
+        if SCENE_TRACK_NAVIGATION_SWITCH:
+            icon_4 = Icon(view_based_content(IconType.DOWN_ARROW, IconType.DOWN_ARROW))
+        else:
+            icon_4 = Icon(view_based_content(IconType.RIGHT_ARROW, IconType.DOWN_ARROW))
+
         return Content(primary=(liveobj_name(state.target_track.target_track),
                                 display_name(song().view.selected_scene)),
                        parameters=(tuple(((element.parameter_name,
