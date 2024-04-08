@@ -13,6 +13,7 @@ Or anything! I am open to suggestions and will try to implement them as best as 
   - Mac:  /Users/[username]/Library/Preferences/Ableton/Live x.x.x/Log.txt
 - If you DONT have Python3 installed you have to set the "I_HAVE_PYTHON_3" flag in the Settings.py to False !!!
   - You can just use a text editor to open the file and change the value to "False" and save it.
+- IMPORTANT: Rename the "KeyLab_Essential_mk3_TGE-master" folder to "KeyLab_Essential_mk3_TGE" (if you see it, do it)
 
 
 
