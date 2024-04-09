@@ -102,7 +102,7 @@ Or anything! I am open to suggestions and will try to implement them as best as 
 
   ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/a3a87514-af62-4248-8688-7fcafd98aeb9)
 
-  - Device settings should look like this:
+- ### Device settings should look like this:
 
     ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/187ef3db-4d02-4608-b62f-8691b9d2b66a)  
     With input and output set to "KeyLab Essential mk3 MIDI" and the control surface set to "KeyLab Essential mk3 TGE"
