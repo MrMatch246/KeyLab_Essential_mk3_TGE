@@ -4,6 +4,7 @@
 Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fixes and the cool features that arturia just overlooked! 
 As i am more of an Arrangement Person, please let me know if there is anything in the session direction that would be useful! 
 Or anything! I am open to suggestions and will try to implement them as best as i can!
+Watch this repo to get notifictions about updates!
 
 
 ## IF YOU HAVE ANY ISSUES:
