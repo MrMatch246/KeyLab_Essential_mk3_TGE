@@ -71,6 +71,14 @@ class DeviceControlsComponent(DeviceComponentBase,
 
         self.update()
 
+
+    def update(self):
+        super().update()
+        if self.locked_to_device:
+            self.device_button.color = "Device.Lock.On"
+        else:
+            self.device_button.color = "Device.Lock.Off"
+
     def set_part_toggle_button(self, button):
         self.part_toggle_button.set_control_element(button)
 
