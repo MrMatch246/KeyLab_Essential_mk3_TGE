@@ -4,6 +4,7 @@
 Modified the Scripts for the Arturia KeyLab Essential Mk3 to add all the easy fixes and the cool features that arturia just overlooked! 
 As i am more of an Arrangement Person, please let me know if there is anything in the session direction that would be useful! 
 Or anything! I am open to suggestions and will try to implement them as best as i can!
+Watch this repo to get notifictions about updates!
 
 
 ## IF YOU HAVE ANY ISSUES:
@@ -13,6 +14,7 @@ Or anything! I am open to suggestions and will try to implement them as best as 
   - Mac:  /Users/[username]/Library/Preferences/Ableton/Live x.x.x/Log.txt
 - If you DONT have Python3 installed you have to set the "I_HAVE_PYTHON_3" flag in the Settings.py to False !!!
   - You can just use a text editor to open the file and change the value to "False" and save it.
+- IMPORTANT: Rename the "KeyLab_Essential_mk3_TGE-master" folder to "KeyLab_Essential_mk3_TGE" (if you see it, do it)
 
 
 
@@ -101,7 +103,7 @@ Or anything! I am open to suggestions and will try to implement them as best as 
 
   ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/a3a87514-af62-4248-8688-7fcafd98aeb9)
 
-  - Device settings should look like this:
+- ### Device settings should look like this:
 
     ![image](https://github.com/MrMatch246/KeyLab_Essential_mk3_TGE/assets/50702646/187ef3db-4d02-4608-b62f-8691b9d2b66a)  
     With input and output set to "KeyLab Essential mk3 MIDI" and the control surface set to "KeyLab Essential mk3 TGE"
