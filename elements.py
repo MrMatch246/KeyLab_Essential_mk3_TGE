@@ -67,10 +67,10 @@ class Elements(ElementsBase):
                                       name="next_device_button")
 
         self.add_button(27, "Metronome_Button")
-        if TAP_METRO_SOLO:
-            self.add_modified_control(control=(self.metronome_button),
+
+        self.add_modified_control(control=(self.metronome_button),
                                       modifier=(self.tap_button),
-                                      name="metronome_solo_button")
+                                      name="metronome_tap_button")
 
         self.add_button(40, "Save_Button")
 
@@ -90,7 +90,7 @@ class Elements(ElementsBase):
                                       modifier=(self.tap_button),
                                       name="context_button_0_tap_shifted")
 
-        if TAP_CONTEXT_1_IS_SOLO:
+        if TAP_CONTEXT_1_IS_ARM:
             self.add_modified_control(control=(self.context_button_1),
                                       modifier=(self.tap_button),
                                       name="context_button_1_tap_shifted")
@@ -98,6 +98,11 @@ class Elements(ElementsBase):
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")
         self.add_button(117, "Display_Encoder_Button")
+
+        self.add_modified_control(control=(self.display_encoder_button),
+                                    modifier=(self.tap_button),
+                                    name="display_encoder_button_tap_shifted")
+
 
         # self.add_button(118, "Bank_Button")
         self.add_modifier_button(118, "Bank_Button")
@@ -123,6 +128,16 @@ class Elements(ElementsBase):
                    [4, 5, 6, 7, 0, 1, 2, 3]]
             pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
 
+            row1 = [self.pad_bank_b._orig_buttons[0][i] for i in [4, 5, 6, 7]]
+            row2 = [self.pad_bank_b._orig_buttons[0][i] for i in [0, 1, 2, 3]]
+            pad_bank_b_row1 = ButtonMatrixElement(rows=[row1])
+            pad_bank_b_row2 = ButtonMatrixElement(rows=[row2])
+
+            row1 = self.pad_bank_a._orig_buttons[0]
+            row2 = self.pad_bank_a._orig_buttons[1]
+
+            pad_bank_a_row1 = ButtonMatrixElement(rows=[row1])
+            pad_bank_a_row2 = ButtonMatrixElement(rows=[row2])
 
             self.add_modified_control(control=(self.pad_bank_a),
                                       modifier=(self.tap_button),
@@ -138,6 +153,19 @@ class Elements(ElementsBase):
                                       modifier=(self.part_button),
                                       name="pad_bank_b_part_shifted")
 
+            self.add_modified_control(control=(pad_bank_b_row1),
+                                      modifier=(self.tap_button),
+                                      name="pad_bank_b_row1_tap_shifted")
+            self.add_modified_control(control=(pad_bank_b_row2),
+                                      modifier=(self.tap_button),
+                                      name="pad_bank_b_row2_tap_shifted")
+
+            self.add_modified_control(control=(pad_bank_a_row1),
+                                      modifier=(self.tap_button),
+                                      name="pad_bank_a_row1_tap_shifted")
+            self.add_modified_control(control=(pad_bank_a_row2),
+                                      modifier=(self.tap_button),
+                                      name="pad_bank_a_row2_tap_shifted")
 
         self.add_element("Encoder_9", RealigningEncoderElement, 104)
         self.add_encoder(113, "Fader_9")
@@ -147,10 +175,10 @@ class Elements(ElementsBase):
         if ENCODER_DEVICE_BANK or ENCODER_TRACK_BANK:
             self.add_modified_control(control=(self.display_encoder),
                                       modifier=(self.part_button),
-                                      name="display_encoder_button_part_shifted")
+                                      name="display_encoder_part_shifted")
             self.add_modified_control(control=(self.display_encoder),
                                       modifier=(self.tap_button),
-                                      name="display_encoder_button_tap_shifted")
+                                      name="display_encoder_tap_shifted")
 
         self.add_matrix([list(range(96, 104)) + list(range(105, 113))],
             "Continuous_Controls", element_factory=RealigningEncoderElement)

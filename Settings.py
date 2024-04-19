@@ -32,12 +32,13 @@ TAP_DUAL_MODE = False
 # it when used with the Tap button set this to True
 TAP_CONTEXT_0_IS_MUTE = True
 
-# If you want to use the Context 1 button that usually arms the track to solo
-# it when used with the Tap button set this to True
-TAP_CONTEXT_1_IS_SOLO = True
+# If you want to use the Context 1 button when used with the Tap button to ARM
+# set this to True
+# False will make it Solo
+TAP_CONTEXT_1_IS_ARM = True
 
-#If you want to have the Context button 1 to Solo by default and TAP + Context 1 to Arm set this to True
-CONTEXT_1_SWITCH_SOLO_ARM = True
+#If you want to have the Context button 1 to Solo by default set this to True
+CONTEXT_1_IS_SOLO = True
 
 
 # Using Tap as shift button and the Pads will either mute or solo Tracks
@@ -48,11 +49,6 @@ TAP_PADS_MUTE_SOLO = True
 # focus This will only work if you are in Device Control Mode not in Track
 # Control Mode
 TAP_DEVICE_NAVIGATION = True
-
-
-# Set this to True if you want to use the Tap + the Metronome Button to Solo mulitple tracks
-# on the Solo Pads
-TAP_METRO_SOLO = True
 
 
 ############## PART BUTTON FEATURES ##############
@@ -94,7 +90,7 @@ ENABLE_ROUNDTRIP_BANKING_PARAM = True
 # Use The Main Encoder + keeping Part pressed to scroll through the track if
 # in Track Control Mode
 ENCODER_TRACK_BANK = True
-ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 4
+ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 1
 
 # Set this to false if you don't want TAP and the encoder to also show the tracks
 ENCODER_TRACK_BANK_TAP = True
@@ -121,8 +117,7 @@ ENCODER_TRACK_DIRECTION_INVERTED = False
 ### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
 if not TAP_SHIFT_MODE:
     TAP_DUAL_MODE = False
-    TAP_CONTEXT_1_IS_SOLO = False
-    TAP_CONTEXT_0_IS_MUTE = False
+    TAP_CONTEXT_1_IS_ARM = False
     TAP_PADS_MUTE_SOLO = False
     TAP_DEVICE_NAVIGATION = False
 
