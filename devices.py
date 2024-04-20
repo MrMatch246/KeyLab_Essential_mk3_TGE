@@ -9,12 +9,12 @@ from ableton.v3.control_surface.components import SimpleDeviceNavigationComponen
 from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl,ToggleButtonControl
 from ableton.v3.control_surface.display import Renderable
 from .PythonBridge import dispatch_hotkey
-from .Settings import PY_TOGGLE_WRENCH, IS_MAC,ENABLE_ROUNDTRIP_BANKING_PARAM
+from .Settings import *
 #from .Log import log
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
     wrench_toggle_button = ButtonControl()
-    device_button = ToggleButtonControl()
+    part_toggle_button = ButtonControl()
 
 
     def __init__(self, *a, **k):
@@ -38,15 +38,8 @@ class DeviceControlsComponent(DeviceComponentBase,
             else:
                 dispatch_hotkey("ctrl+alt+p")
 
-    @device_button.toggled
-    def device_button(self, *_):
-        pass
-    @device_button.pressed
-    def device_button(self, *_):
-        pass
-
-    @device_button.double_clicked
-    def device_button(self, *k):
+    @wrench_toggle_button.double_clicked
+    def wrench_toggle_button(self, *k):
         #This is a fix if you unlocked on an empty track and want to lock the device again that was previously locked
         if liveobj_valid(self.device):
             if self.locked_device_name == cast(str, self.device.name) and not self.locked_to_device:
@@ -75,9 +68,9 @@ class DeviceControlsComponent(DeviceComponentBase,
     def update(self):
         super().update()
         if self.locked_to_device:
-            self.device_button.color = "Device.Lock.On"
+            self.part_toggle_button.color = "Device.Lock.On"
         else:
-            self.device_button.color = "Device.Lock.Off"
+            self.part_toggle_button.color = "Device.Lock.Off"
 
     def set_part_toggle_button(self, button):
         self.part_toggle_button.set_control_element(button)

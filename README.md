@@ -42,7 +42,7 @@ Watch this repo to get notifictions about updates!
 
     - TAB + PAD Bank B = Solo Tracks (exclusive Solo)
   
-    - TAP + METRONOME + PAD Bank B = Solo multiple Tracks 
+    - TAP + METRONOME = Actual TAP functionality (for setting the tempo)
 
     - TAP + Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks in steps of 4
     

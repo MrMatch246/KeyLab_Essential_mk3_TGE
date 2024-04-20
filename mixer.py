@@ -42,9 +42,7 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     @part_toggle_button.pressed
     def part_toggle_button(self, _):
         self._session_ring.track_offset = 8 if self._session_ring.track_offset == 0 else 0
-
-
-
+        #TODO: Implement part toggle button
 
     def set_bank_toggle_button(self, button):
         self.bank_toggle_button.set_control_element(button)

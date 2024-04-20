@@ -6,9 +6,9 @@
 # Compiled at: 2024-01-31 17:08:32
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
+from ableton.v3.control_surface.mode.behaviour import ToggleBehaviour
 
 from .Settings import *
-
 
 def create_mappings(control_surface):
     mappings = dict()
@@ -23,8 +23,7 @@ def create_mappings(control_surface):
                                  rewind_button="rewind_button",
                                  fastforward_button="fastforward_button")
 
-    if TAP_SHIFT_MODE is TAP_DUAL_MODE:
-        mappings["Transport"]["tap_tempo_button"] = "tap_button"
+    mappings["Transport"]["tap_tempo_button"] = "metronome_tap_button"
 
     mappings["View_Based_Recording"] = dict(record_button="record_button")
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
@@ -60,36 +59,38 @@ def create_mappings(control_surface):
     else:
         mixer["target_track_arm_button"] = "context_button_1"
 
-
     if PY_SAVE_PROJECT:
         mixer["save_project_button"] = "save_project_button"
 
     if ENCODER_TRACK_BANK_TAP:
         mixer["scroll_encoder"] = "display_encoder_tap_shifted"
 
-    
+
     mappings["Mixer"] = mixer
-    mappings["Session"] = dict(
-        selected_scene_launch_button="display_encoder_button",
-        clip_launch_buttons="pad_bank_a")
-    mappings["Drum_Group"] = dict(matrix="pad_bank_b")
+
+    #mappings["Session"] = dict(selected_scene_launch_button="display_encoder_button",clip_launch_buttons="pad_bank_a")
+
+    #mappings["Drum_Group"] = dict(matrix="pad_bank_b")
+
     mappings["Continuous_Control_Modes"] = dict(
         support_momentary_mode_cycling=False,
-        cycle_mode_button="context_button_0", device=dict(component="Device",
-                                                          parameter_controls="continuous_controls",
-                                                          ),
+        cycle_mode_button="context_button_0",
+        device=dict(component="Device",
+                    parameter_controls="continuous_controls",
+                    prev_button="previous_device_button",
+                    next_button="next_device_button",
+                    part_toggle_button="part_button",
+                    wrench_toggle_button="part_button_tap_shifted",
+                    ),
         mixer=dict(component="Mixer", volume_controls="faders",
                    pan_controls="encoders",
-                   track_select_buttons="pad_bank_a_row1_tap_shifted",
-                   arm_buttons="pad_bank_a_row2_tap_shifted",
+                   master_track_volume_control="fader_9",
+                   prehear_volume_control="encoder_9",
                    ))
 
     if ENCODER_DEVICE_BANK:
         mappings["Continuous_Control_Modes"]["device"][
             "bank_scroll_encoder"] = "display_encoder_part_shifted"
-    else:
-        mappings["Continuous_Control_Modes"]["device"][
-            "part_toggle_button"] = "part_button"
 
     if ENCODER_TRACK_BANK:
         mappings["Continuous_Control_Modes"]["mixer"][
@@ -98,35 +99,27 @@ def create_mappings(control_surface):
         mappings["Continuous_Control_Modes"]["mixer"][
             "part_toggle_button"] = "part_button"
 
-    if TAP_DEVICE_NAVIGATION:
-        mappings["Continuous_Control_Modes"]["device"][
-            "prev_button"] = "previous_device_button"
-        mappings["Continuous_Control_Modes"]["device"][
-            "next_button"] = "next_device_button"
-
-    if PY_TOGGLE_WRENCH:
-        mappings["Continuous_Control_Modes"]["device"][
-            "wrench_toggle_button"] = "wrench_toggle_button"
-
-    if FADER_9_IS_MASTER:
-        mappings["Continuous_Control_Modes"]["mixer"][
-            "master_track_volume_control"] = "fader_9"
-        mappings["Continuous_Control_Modes"]["mixer"][
-            "prehear_volume_control"] = "encoder_9"
-
-    if ENABLE_DOUBLE_PART_DEVICE_LOCK:
-        mappings["Continuous_Control_Modes"]["device"][
-            "device_button"] = "part_button"
 
     mappings["Continuous_Pad_Modes"] = dict(
         support_momentary_mode_cycling=False,
         cycle_mode_button="display_encoder_button_tap_shifted",
-        mixer_1=dict(component="Mixer",
-                     track_select_buttons="pad_bank_a_row1_tap_shifted",
-                     mute_buttons="pad_bank_a_row2_tap_shifted"),
-        mixer_2=dict(component="Mixer",
-                     track_select_buttons="pad_bank_a_row1_tap_shifted",
-                     solo_buttons="pad_bank_a_row2_tap_shifted")
+        default_behaviour=ToggleBehaviour(),
+        Drums=dict(
+                    modes=[dict(component="Drum_Group",
+                                 matrix="pad_bank_b"),
+                            dict(component="Session"
+                                 ,selected_scene_launch_button="display_encoder_button",
+                                 clip_launch_buttons="pad_bank_a")]
+                     ),
+        Mixer_1=dict(component="Mixer",
+                                track_select_buttons="pad_bank_a_row1",
+                                mute_buttons="pad_bank_a_row2"),
+        Mixer_2=dict(component="Mixer",
+                                track_select_buttons="pad_bank_a_row1",
+                                solo_buttons="pad_bank_a_row2"),
+        Mixer_3=dict(component="Mixer",
+                                track_select_buttons="pad_bank_a_row1",
+                                arm_buttons="pad_bank_a_row2"),
     )
     return mappings
 
