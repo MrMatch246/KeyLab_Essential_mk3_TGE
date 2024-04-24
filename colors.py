@@ -119,7 +119,7 @@ class Skin:
 
     class Mixer:
         ArmOn = Rgb.RED
-        ArmOff = Rgb.RED_HALF
+        ArmOff = Rgb.RED_LOW
         NoTrack = Rgb.OFF
         TrackSelected = Rgb.WHITE
         SoloOn = Rgb.BLUE
@@ -176,4 +176,8 @@ class Skin:
             NotSelected = lambda x: create_color(*liveobj_color_to_midi_rgb_values(x))
             Off = Rgb.OFF
 
+    class ContinuousPadBankBModes:
+        Mixer_Mute = Rgb.YELLOW
+        Mixer_Solo = Rgb.BLUE
+        Mixer_Arm = Rgb.RED
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/colors.pyc

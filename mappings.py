@@ -6,9 +6,11 @@
 # Compiled at: 2024-01-31 17:08:32
 # Size of source mod 2**32: 1837 bytes
 from __future__ import absolute_import, print_function, unicode_literals
+
 from ableton.v3.control_surface.mode.behaviour import ToggleBehaviour
 
 from .Settings import *
+
 
 def create_mappings(control_surface):
     mappings = dict()
@@ -29,7 +31,6 @@ def create_mappings(control_surface):
     mappings["Undo_Redo"] = dict(undo_button="undo_button",
                                  redo_button="redo_button")
     mappings["Clip_Actions"] = dict(quantize_button="punch_button")
-
 
     mappings["View_Control"] = {}
     if SCENE_TRACK_NAVIGATION_SWITCH:
@@ -65,12 +66,11 @@ def create_mappings(control_surface):
     if ENCODER_TRACK_BANK_TAP:
         mixer["scroll_encoder"] = "display_encoder_tap_shifted"
 
-
     mappings["Mixer"] = mixer
 
-    #mappings["Session"] = dict(selected_scene_launch_button="display_encoder_button",clip_launch_buttons="pad_bank_a")
+    mappings["Session"] = dict(selected_scene_launch_button="display_encoder_button",clip_launch_buttons="pad_bank_a_shifted")
 
-    #mappings["Drum_Group"] = dict(matrix="pad_bank_b")
+    mappings["Drum_Group"] = dict(matrix="pad_bank_a")
 
     mappings["Continuous_Control_Modes"] = dict(
         support_momentary_mode_cycling=False,
@@ -99,28 +99,35 @@ def create_mappings(control_surface):
         mappings["Continuous_Control_Modes"]["mixer"][
             "part_toggle_button"] = "part_button"
 
+    # mappings["Continuous_Pad_Bank_A_Modes"] = dict(
+    #     support_momentary_mode_cycling=True,
+    #     cycle_mode_button="loop_tap_button",
+    #     default_behaviour=ToggleBehaviour(),
+    #     Session=dict(component="Session",
+    #                  selected_scene_launch_button="display_encoder_button",
+    #                  clip_launch_buttons="pad_bank_a"),
+    #     Drums=dict(component="Drum_Group",
+    #                matrix="pad_bank_a")
+    # )
 
-    mappings["Continuous_Pad_Modes"] = dict(
+
+    mappings["Continuous_Pad_Bank_B_Modes"] = dict(
         support_momentary_mode_cycling=False,
         cycle_mode_button="display_encoder_button_tap_shifted",
         default_behaviour=ToggleBehaviour(),
-        Drums=dict(
-                    modes=[dict(component="Drum_Group",
-                                 matrix="pad_bank_b"),
-                            dict(component="Session"
-                                 ,selected_scene_launch_button="display_encoder_button",
-                                 clip_launch_buttons="pad_bank_a")]
-                     ),
-        Mixer_1=dict(component="Mixer",
-                                track_select_buttons="pad_bank_a_row1",
-                                mute_buttons="pad_bank_a_row2"),
-        Mixer_2=dict(component="Mixer",
-                                track_select_buttons="pad_bank_a_row1",
-                                solo_buttons="pad_bank_a_row2"),
-        Mixer_3=dict(component="Mixer",
-                                track_select_buttons="pad_bank_a_row1",
-                                arm_buttons="pad_bank_a_row2"),
+        Mixer_Mute=dict(component="Mixer",
+                     track_select_buttons="pad_bank_b_row1",
+                     mute_buttons="pad_bank_b_row2"),
+        Mixer_Solo=dict(component="Mixer",
+                     track_select_buttons="pad_bank_b_row1",
+                     solo_buttons="pad_bank_b_row2"),
+        Mixer_Arm=dict(component="Mixer",
+                     track_select_buttons="pad_bank_b_row1",
+                     arm_buttons="pad_bank_b_row2"),
     )
+
+
+
     return mappings
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/mappings.pyc

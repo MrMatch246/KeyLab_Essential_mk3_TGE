@@ -15,6 +15,7 @@ from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase, MapMode, \
 from ableton.v3.control_surface.elements import CachingSendMessageGenerator, \
     DisplayLineElement, EncoderElement, ButtonMatrixElement
 
+from .Log import log
 from . import midi
 from .Settings import *
 from .display import Line1Text, Line2Text
@@ -27,9 +28,11 @@ def create_rgb_button(identifier, name=None, **k):
 
 
 def create_rgb_pad(identifier, name, **k):
-    return create_sysex_sending_button(identifier, name,
-        midi.LED_HEADER + (midi.PAD_ID_TO_SYSEX_ID[identifier],),
-        msg_type=MIDI_NOTE_TYPE, is_rgb=True, **k)
+    return create_sysex_sending_button(
+        identifier,
+        name,
+        midi.LED_HEADER + (midi.PAD_ID_TO_SYSEX_ID[identifier],), msg_type=MIDI_NOTE_TYPE,
+        is_rgb=True, **k)
 
 
 class RealigningEncoderElement(RealigningEncoderMixin, EncoderElement):
@@ -53,8 +56,8 @@ class Elements(ElementsBase):
 
         self.add_button(24, "Loop_Button")
         self.add_modified_control(control=(self.loop_button),
-                                    modifier=(self.tap_button),
-                                    name="loop_tap_button")
+                                  modifier=(self.tap_button),
+                                  name="loop_tap_button")
 
         self.add_button(25, "Rewind_Button")
         self.add_button(26, "Fastforward_Button")
@@ -108,15 +111,15 @@ class Elements(ElementsBase):
                                   modifier=(self.tap_button),
                                   name="display_encoder_button_tap_shifted")
 
-        self.add_encoder(116, "Display_Encoder",map_mode=(MapMode.LinearBinaryOffset))
+        self.add_encoder(116, "Display_Encoder",
+                         map_mode=(MapMode.LinearBinaryOffset))
 
         self.add_modified_control(control=(self.display_encoder),
-                                modifier=(self.part_button),
-                                name="display_encoder_part_shifted")
+                                  modifier=(self.part_button),
+                                  name="display_encoder_part_shifted")
         self.add_modified_control(control=(self.display_encoder),
-                                modifier=(self.tap_button),
-                                name="display_encoder_tap_shifted")
-
+                                  modifier=(self.tap_button),
+                                  name="display_encoder_tap_shifted")
 
         self.add_button(118, "Bank_Button")
         # self.add_modifier_button(118, "Bank_Button")
@@ -127,59 +130,24 @@ class Elements(ElementsBase):
 
         self.add_matrix([[40, 41, 42, 43], [36, 37, 38, 39]], "Pad_Bank_A",
                         element_factory=create_rgb_pad, channels=10)
-        self.add_matrix([[40, 41, 42, 43]], "Pad_Bank_A_Row1",
-                        element_factory=create_rgb_pad, channels=10)
-        self.add_matrix([[36, 37, 38, 39]], "Pad_Bank_A_Row2",
-                        element_factory=create_rgb_pad, channels=10)
-
-        self.add_matrix([range(44, 52)], "Pad_Bank_B",
-                        element_factory=create_rgb_pad, channels=10)
-        self.add_matrix([range(48, 52)], "Pad_Bank_B_Row1",
-                        element_factory=create_rgb_pad, channels=10)
-        self.add_matrix([range(44, 48)], "Pad_Bank_B_Row2",
-                        element_factory=create_rgb_pad, channels=10)
 
 
-        pad_bank_b_reordered = ButtonMatrixElement(rows=[
-            [self.pad_bank_b._orig_buttons[0][i] for i in
-             [4, 5, 6, 7, 0, 1, 2, 3]]])
-        pad_bank_b_row1 = ButtonMatrixElement(
-            rows=[[self.pad_bank_b._orig_buttons[0][i] for i in [4, 5, 6, 7]]])
-        pad_bank_b_row2 = ButtonMatrixElement(
-            rows=[[self.pad_bank_b._orig_buttons[0][i] for i in [0, 1, 2, 3]]])
 
-        pad_bank_a_row1 = ButtonMatrixElement(
-            rows=[self.pad_bank_a._orig_buttons[0]])
-        pad_bank_a_row2 = ButtonMatrixElement(
-            rows=[self.pad_bank_a._orig_buttons[1]])
 
         self.add_modified_control(control=(self.pad_bank_a),
-                            modifier=(self.tap_button),
-                            name="pad_bank_a_shifted")
-        self.add_modified_control(control=(pad_bank_b_reordered),
-                            modifier=(self.tap_button),
-                            name="pad_bank_b_shifted")
+                                  modifier=(self.tap_button),
+                                  name="pad_bank_a_shifted")
 
         self.add_modified_control(control=(self.pad_bank_a),
-                            modifier=(self.part_button),
-                            name="pad_bank_a_part_shifted")
-        self.add_modified_control(control=(pad_bank_b_reordered),
-                            modifier=(self.part_button),
-                            name="pad_bank_b_part_shifted")
+                                  modifier=(self.part_button),
+                                  name="pad_bank_a_part_shifted")
 
-        self.add_modified_control(control=(pad_bank_b_row1),
-                            modifier=(self.tap_button),
-                            name="pad_bank_b_row1_tap_shifted")
-        self.add_modified_control(control=(pad_bank_b_row2),
-                            modifier=(self.tap_button),
-                            name="pad_bank_b_row2_tap_shifted")
-
-        self.add_modified_control(control=(pad_bank_a_row1),
-                            modifier=(self.tap_button),
-                            name="pad_bank_a_row1_tap_shifted")
-        self.add_modified_control(control=(pad_bank_a_row2),
-                            modifier=(self.tap_button),
-                            name="pad_bank_a_row2_tap_shifted")
+        self.add_matrix([range(44, 52)],
+                        "pad_bank_b", element_factory=create_rgb_pad, channels=10)
+        self.add_matrix([range(48, 52)], "pad_bank_b_row1",
+                        element_factory=create_rgb_pad, channels=10)
+        self.add_matrix([range(44, 48)], "pad_bank_b_row2",
+                        element_factory=create_rgb_pad, channels=10)
 
         self.add_element("Encoder_9", RealigningEncoderElement, 104)
         self.add_encoder(113, "Fader_9")
