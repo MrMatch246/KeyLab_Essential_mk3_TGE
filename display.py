@@ -181,13 +181,16 @@ def create_root_view() -> view.View[Optional[Content]]:
             if state.continuous_control_modes.selected_mode == "device" and \
                 state.device_bank_navigation.has_changed_bank_index:
                 (first, last) = get_first_last_param_name(state)
-                popup = (get_device_name(state), f"{first} - {last}")
+                if state.device.device:
+                    popup = (get_device_name(state), f"{first} - {last}")
+                else:
+                    popup = None
             else:
                 (first, last) = get_first_last_track_name(state)
                 popup = (
                     f"Tracks {state.mixer_session_ring.offset[0] // ENCODER_TRACK_BANK_TRACKS_PER_CLICK + 1}",
                     f"{first} - {last}")
-        if state.elements.tap_button.is_pressed:
+        if state.elements.part_button.is_pressed:
             (first, last) = get_first_last_track_name(state)
             popup = (
                 f"Tracks {state.mixer_session_ring.offset[0] // ENCODER_TRACK_BANK_TRACKS_PER_CLICK + 1}",

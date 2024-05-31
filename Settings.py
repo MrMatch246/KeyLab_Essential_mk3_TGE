@@ -6,9 +6,6 @@
 # If you want implicit arm to be enabled set this to True
 ENABLE_AUTO_ARM = True
 
-# If you want to use the Fader 9 as a master fader set this to True
-# Will also set Knob 9 to Cue Volume instead of current track pan
-FADER_9_IS_MASTER = True
 
 #Sets the Speed of the Fast Forward and Rewind Buttons
 REWIND_FORWARD_SPEED = 4
@@ -18,48 +15,17 @@ REWIND_FORWARD_SPEED = 4
 ENABLE_PLAY_PAUSE_BUTTON = True
 
 
-
-############## TAP BUTTON FEATURES ##############
-# If you want to use the Tap button as a shift button set this to True
-# if you disable this you cant use the shift functionalities of the Tap button
-TAP_SHIFT_MODE = True
-
-# If you want to use the Tap button as a shift button and as Tap button set
-# this to True
-TAP_DUAL_MODE = False
-
 # If you want to use the Context 0 button that usually switches Track/device mode the track to mute
 # it when used with the Tap button set this to True
 TAP_CONTEXT_0_IS_MUTE = True
 
-# If you want to use the Context 1 button that usually arms the track to solo
-# it when used with the Tap button set this to True
-TAP_CONTEXT_1_IS_SOLO = True
+# If you want to use the Context 1 button when used with the Tap button to ARM
+# set this to True
+# False will make it Solo
+TAP_CONTEXT_1_IS_ARM = True
 
-#If you want to have the Context button 1 to Solo by default and TAP + Context 1 to Arm set this to True
-CONTEXT_1_SWITCH_SOLO_ARM = True
-
-
-# Using Tap as shift button and the Pads will either mute or solo Tracks
-# Bank A will mute and Bank B will solo
-TAP_PADS_MUTE_SOLO = True
-
-# Using Tap as shift button and rewind and fastforward will switch device
-# focus This will only work if you are in Device Control Mode not in Track
-# Control Mode
-TAP_DEVICE_NAVIGATION = True
-
-
-# Set this to True if you want to use the Tap + the Metronome Button to Solo mulitple tracks
-# on the Solo Pads
-TAP_METRO_SOLO = True
-
-
-############## PART BUTTON FEATURES ##############
-
-# If you want to use double click on the Part button to lock the device set this to True
-ENABLE_DOUBLE_PART_DEVICE_LOCK = True
-
+#If you want to have the Context button 1 to Solo by default set this to True
+CONTEXT_1_IS_SOLO = True
 
 ############## PYTHON BASED FEATURES ##############
 # If you can run python3 scripts on your system set this to True
@@ -83,21 +49,11 @@ PY_SAVE_PROJECT = True
 PY_ENABLE_LOOP_SELECTION = True
 
 
-# ############# ENCODER USAGE ############## Use The Main Encoder + keeping
-# Part pressed to scroll through the device parameter Banks
-ENCODER_DEVICE_BANK = True
-
 # Set this to false if you don't want the encoder to jump to the first bank
-# after the last bank
+# after the last bank (only for the device parameter bank)
 ENABLE_ROUNDTRIP_BANKING_PARAM = True
 
-# Use The Main Encoder + keeping Part pressed to scroll through the track if
-# in Track Control Mode
-ENCODER_TRACK_BANK = True
-ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 4
-
-# Set this to false if you don't want TAP and the encoder to also show the tracks
-ENCODER_TRACK_BANK_TAP = True
+ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 1
 
 # Set this to false if you don't want the encoder to jump to the first Tracks
 # Page after the last bank
@@ -111,24 +67,9 @@ SCENE_TRACK_NAVIGATION_SWITCH = True
 ENCODER_TRACK_DIRECTION_INVERTED = False
 
 
-
-
-
-
-
-
-
 ### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
-if not TAP_SHIFT_MODE:
-    TAP_DUAL_MODE = False
-    TAP_CONTEXT_1_IS_SOLO = False
-    TAP_CONTEXT_0_IS_MUTE = False
-    TAP_PADS_MUTE_SOLO = False
-    TAP_DEVICE_NAVIGATION = False
-
 if not I_HAVE_PYTHON_3:
     PY_TOGGLE_WRENCH = False
     PY_SAVE_PROJECT = False
 
-if not ENCODER_TRACK_BANK:
-    ENCODER_TRACK_BANK_TRACKS_PER_CLICK = 8
+

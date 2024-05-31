@@ -6,20 +6,23 @@
 # Compiled at: 2024-01-31 17:08:32
 # Size of source mod 2**32: 1893 bytes
 from __future__ import absolute_import, print_function, unicode_literals
+
+from future.moves.itertools import zip_longest
 from ableton.v3.base import listens, nop
 from ableton.v3.control_surface.components import MixerComponent as MixerComponentBase
 from ableton.v3.control_surface.components import SessionRingComponent
 from ableton.v3.control_surface.components.scroll import ScrollComponent,Scrollable
 from ableton.v3.control_surface.controls import ButtonControl,StepEncoderControl
+
+
 from .PythonBridge import dispatch_hotkey
 from .Settings import *
-#from .Log import log
 
 class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
-    part_toggle_button = ButtonControl()
     bank_toggle_button = ButtonControl()
     save_project_button = ButtonControl()
     scroll_encoder = StepEncoderControl(num_steps=64)
+
 
     def __init__(self, *a, **k):
         self._session_ring = SessionRingComponent(name="Mixer_Session_Ring",
@@ -35,15 +38,26 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
         self.steps = ENCODER_TRACK_BANK_TRACKS_PER_CLICK
         self.bank_toggle_button.color = "Mixer.MuteButton"
         self.bank_toggle_button.on_color = "Mixer.SoloButton"
-
-    def set_part_toggle_button(self, button):
-        self.part_toggle_button.set_control_element(button)
-
-    @part_toggle_button.pressed
-    def part_toggle_button(self, _):
-        self._session_ring.track_offset = 8 if self._session_ring.track_offset == 0 else 0
+        self.pad_mixer_mode = "Mute"
+        self.bank_toggle_button.color = f"ContinuousPadBankBModes.Mixer_{self.pad_mixer_mode}"
 
 
+    def set_arm_buttons(self, buttons):
+        for (strip, button) in zip_longest(self._channel_strips, buttons or []):
+            strip.arm_button.set_control_element(button)
+        self.bank_toggle_button.color = f"ContinuousPadBankBModes.Mixer_Arm"
+        self.pad_mixer_mode = "Arm"
+
+    def set_solo_buttons(self, buttons):
+        for (strip, button) in zip_longest(self._channel_strips, buttons or []):
+            strip.solo_button.set_control_element(button)
+        self.bank_toggle_button.color = f"ContinuousPadBankBModes.Mixer_Solo"
+        self.pad_mixer_mode = "Solo"
+    def set_mute_buttons(self, buttons):
+        for (strip, button) in zip_longest(self._channel_strips, buttons or []):
+            strip.mute_button.set_control_element(button)
+        self.bank_toggle_button.color = f"ContinuousPadBankBModes.Mixer_Mute"
+        self.pad_mixer_mode = "Mute"
 
 
     def set_bank_toggle_button(self, button):
@@ -51,22 +65,22 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
 
     @bank_toggle_button.pressed
     def bank_toggle_button(self, _):
-        self.bank_bank_toggle_button._is_on = not self.bank_bank_toggle_button._is_on
+        pass
+        #self.bank_toggle_button._is_on = not self.bank_toggle_button._is_on
 
-    @bank_toggle_button.double_clicked
-    def bank_bank_toggle_button(self, _):
-        old_color = self.bank_bank_toggle_button.color
-        self.bank_bank_toggle_button.color = self.bank_bank_toggle_button.on_color
-        self.bank_bank_toggle_button.on_color = old_color
+    # @bank_toggle_button.double_clicked
+    # def bank_toggle_button(self, _):
+    #     old_color = self.bank_toggle_button.color
+    #     self.bank_toggle_button.color = self.bank_toggle_button.on_color
+    #     self.bank_toggle_button.on_color = old_color
 
     @bank_toggle_button.pressed_delayed
-    def bank_bank_toggle_button(self, _):
+    def bank_toggle_button(self, _):
         pass
 
     @listens("tracks")
     def __on_tracks_changed(self):
-        self.part_toggle_button.enabled = len(self._session_ring.tracks_to_use()) > 8
-        self.part_toggle_button.color = "Banking.PageOne" if self._session_ring.track_offset == 0 else "Banking.PageTwo"
+        pass
 
     def set_save_project_button(self, button):
         self.save_project_button.set_control_element(button)
@@ -84,7 +98,6 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     def scroll_encoder(self, value, _):
         if len(self._session_ring.tracks_to_use()) > 8:
             down = (value < 0) != ENCODER_TRACK_DIRECTION_INVERTED
-            #log(f"scroll_encoder: {value} down: {down}")
             if ENABLE_ROUNDTRIP_BANKING_TRACK:
                 if not down:
                     self.scroll_up()
@@ -98,7 +111,7 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
 
     def can_scroll_up(self):
         current_offset = self._session_ring.track_offset
-        if len(self._session_ring.tracks_to_use()) >current_offset + self.steps:
+        if len(self._session_ring.tracks_to_use()) > current_offset + self.steps:
             return True
         return False
 

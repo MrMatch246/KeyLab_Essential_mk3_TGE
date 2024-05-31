@@ -27,9 +27,11 @@ def create_rgb_button(identifier, name=None, **k):
 
 
 def create_rgb_pad(identifier, name, **k):
-    return create_sysex_sending_button(identifier, name,
-        midi.LED_HEADER + (midi.PAD_ID_TO_SYSEX_ID[identifier],),
-        msg_type=MIDI_NOTE_TYPE, is_rgb=True, **k)
+    return create_sysex_sending_button(
+        identifier,
+        name,
+        midi.LED_HEADER + (midi.PAD_ID_TO_SYSEX_ID[identifier],), msg_type=MIDI_NOTE_TYPE,
+        is_rgb=True, **k)
 
 
 class RealigningEncoderElement(RealigningEncoderMixin, EncoderElement):
@@ -49,28 +51,28 @@ class Elements(ElementsBase):
         self.add_button(21, "Play_Button")
         self.add_button(22, "Record_Button")
 
-        if TAP_SHIFT_MODE:
-            self.add_modifier_button(23, "Tap_Button")
-        else:
-            self.add_button(23, "Tap_Button")
+        self.add_modifier_button(23, "Tap_Button")
 
         self.add_button(24, "Loop_Button")
+        self.add_modified_control(control=(self.loop_button),
+                                  modifier=(self.tap_button),
+                                  name="loop_tap_button")
+
         self.add_button(25, "Rewind_Button")
         self.add_button(26, "Fastforward_Button")
 
-        if TAP_SHIFT_MODE:
-            self.add_modified_control(control=(self.rewind_button),
-                                      modifier=(self.tap_button),
-                                      name="previous_device_button")
-            self.add_modified_control(control=(self.fastforward_button),
-                                      modifier=(self.tap_button),
-                                      name="next_device_button")
+        self.add_modified_control(control=(self.rewind_button),
+                                  modifier=(self.tap_button),
+                                  name="previous_device_button")
+        self.add_modified_control(control=(self.fastforward_button),
+                                  modifier=(self.tap_button),
+                                  name="next_device_button")
 
         self.add_button(27, "Metronome_Button")
-        if TAP_METRO_SOLO:
-            self.add_modified_control(control=(self.metronome_button),
-                                      modifier=(self.tap_button),
-                                      name="metronome_solo_button")
+
+        self.add_modified_control(control=(self.metronome_button),
+                                  modifier=(self.tap_button),
+                                  name="metronome_tap_button")
 
         self.add_button(40, "Save_Button")
 
@@ -90,67 +92,56 @@ class Elements(ElementsBase):
                                       modifier=(self.tap_button),
                                       name="context_button_0_tap_shifted")
 
-        if TAP_CONTEXT_1_IS_SOLO:
+        if TAP_CONTEXT_1_IS_ARM:
             self.add_modified_control(control=(self.context_button_1),
                                       modifier=(self.tap_button),
                                       name="context_button_1_tap_shifted")
 
         self.add_button(46, "Context_Button_2")
         self.add_button(47, "Context_Button_3")
+
+        self.add_modifier_button(119, "Part_Button")
+        self.add_modified_control(control=(self.part_button),
+                                  modifier=(self.tap_button),
+                                  name="part_button_tap_shifted")
+
         self.add_button(117, "Display_Encoder_Button")
+        self.add_modified_control(control=(self.display_encoder_button),
+                                  modifier=(self.part_button),
+                                  name="display_encoder_button_part_shifted")
 
-        # self.add_button(118, "Bank_Button")
-        self.add_modifier_button(118, "Bank_Button")
-
-        if ENCODER_DEVICE_BANK:
-            self.add_modifier_button(119, "Part_Button")
-        else:
-            self.add_button(119, "Part_Button")
-
-        if PY_TOGGLE_WRENCH:
-            self.add_modified_control(control=(self.part_button),
-                                      modifier=(self.tap_button),
-                                      name="wrench_toggle_button")
-
-        self.add_matrix([[40, 41, 42, 43], [36, 37, 38, 39]], "Pad_Bank_A",
-            element_factory=create_rgb_pad, channels=10)
-        self.add_matrix([range(44, 52)], "Pad_Bank_B",
-            element_factory=create_rgb_pad, channels=10)
-        if TAP_SHIFT_MODE and TAP_PADS_MUTE_SOLO:
-            # reorder so that pad 5 is the first button
-
-            row = [self.pad_bank_b._orig_buttons[0][i] for i in
-                   [4, 5, 6, 7, 0, 1, 2, 3]]
-            pad_bank_b_reordered = ButtonMatrixElement(rows=[row])
-
-
-            self.add_modified_control(control=(self.pad_bank_a),
-                                      modifier=(self.tap_button),
-                                      name="pad_bank_a_shifted")
-            self.add_modified_control(control=(pad_bank_b_reordered),
-                                      modifier=(self.tap_button),
-                                      name="pad_bank_b_shifted")
-
-            self.add_modified_control(control=(self.pad_bank_a),
-                                      modifier=(self.part_button),
-                                      name="pad_bank_a_part_shifted")
-            self.add_modified_control(control=(pad_bank_b_reordered),
-                                      modifier=(self.part_button),
-                                      name="pad_bank_b_part_shifted")
-
-
-        self.add_element("Encoder_9", RealigningEncoderElement, 104)
-        self.add_encoder(113, "Fader_9")
         self.add_encoder(116, "Display_Encoder",
                          map_mode=(MapMode.LinearBinaryOffset))
 
-        if ENCODER_DEVICE_BANK or ENCODER_TRACK_BANK:
-            self.add_modified_control(control=(self.display_encoder),
-                                      modifier=(self.part_button),
-                                      name="display_encoder_button_part_shifted")
-            self.add_modified_control(control=(self.display_encoder),
-                                      modifier=(self.tap_button),
-                                      name="display_encoder_button_tap_shifted")
+        self.add_modified_control(control=(self.display_encoder),
+                                  modifier=(self.part_button),
+                                  name="display_encoder_part_shifted")
+        self.add_modified_control(control=(self.display_encoder),
+                                  modifier=(self.tap_button),
+                                  name="display_encoder_tap_shifted")
+
+        self.add_button(118, "Bank_Button")
+
+        self.add_modified_control(control=(self.bank_button),
+                                  modifier=(self.tap_button),
+                                  name="bank_button_tap_shifted")
+
+        self.add_matrix([[40, 41, 42, 43], [36, 37, 38, 39]], "Pad_Bank_A",
+                        element_factory=create_rgb_pad, channels=10)
+
+        self.add_modified_control(control=(self.pad_bank_a),
+                                  modifier=(self.part_button),
+                                  name="pad_bank_a_shifted")
+
+        self.add_matrix([range(44, 52)],
+                        "pad_bank_b", element_factory=create_rgb_pad, channels=10)
+        self.add_matrix([range(48, 52)], "pad_bank_b_row1",
+                        element_factory=create_rgb_pad, channels=10)
+        self.add_matrix([range(44, 48)], "pad_bank_b_row2",
+                        element_factory=create_rgb_pad, channels=10)
+
+        self.add_element("Encoder_9", RealigningEncoderElement, 104)
+        self.add_encoder(113, "Fader_9")
 
         self.add_matrix([list(range(96, 104)) + list(range(105, 113))],
             "Continuous_Controls", element_factory=RealigningEncoderElement)

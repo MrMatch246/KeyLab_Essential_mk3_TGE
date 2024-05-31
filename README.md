@@ -14,60 +14,64 @@ Watch this repo to get notifictions about updates!
   - Mac:  /Users/[username]/Library/Preferences/Ableton/Live x.x.x/Log.txt
 - If you DONT have Python3 installed you have to set the "I_HAVE_PYTHON_3" flag in the Settings.py to False !!!
   - You can just use a text editor to open the file and change the value to "False" and save it.
-- IMPORTANT: Rename the "KeyLab_Essential_mk3_TGE-master" folder to "KeyLab_Essential_mk3_TGE" (if you see it, do it)
+  - On Windows you can just install it from the Microsoft Store (3.11> is recommended)
+ 
+-IMPORTANT: Rename the "KeyLab_Essential_mk3_TGE-master" folder to "KeyLab_Essential_mk3_TGE" (if you see it, do it)
 
 
 
 ## Current Features (You can choose which to use):
 
-- Fader 9 Controls Master in Tracks Mode (context button 0) and current track in device mode
-  - Knob 9 Controls Prehear Volume in Tracks Mode (context button 0) and current track Panning in device mode
 
+### KNOBS AND FADERS
+- Fader 9 Controls Master in Tracks Mode (toggle with context button 0) and current track in Device Mode
+- Knob 9 Controls Prehear Volume in Tracks Mode (toggle with context button 0) and current track Panning in Device Mode
+
+### REWIND/FASTFORWARD
 - You can set Rewind and FastForward Speed in the Settings.py file (currently set to 4 instead of 1)
 
-- Play Button can work as Play/Pause Button
+### PLAY BUTTON
+- Play Button can work as Play/Pause Button 
+  - normal press = play/pause
+  - long press = play from marker (mouse click)
 
+### GENERAL
 - Enabled Auto Arm
+- TAP + METRONOME = Actual TAP functionality (for setting the tempo)
+- TAP + Save Saves the current project!!!!!!! (Ctrl + S) (needs python3)
+- Holding the Loop Button loops the current selection (Ctrl + L) (needs python3)
 
-- Pressing the TAP button doubles as holding a Shift Button that unlocks the following options:  
 
-    - TAP + Rewind / FastForward = previous/next device in chain
+### PADS
+- Easy Track Mute/Arm/Solo + Session/Normal Pads
+  - With Bank B selected
+    - The Pads will show a window of 4 tracks in the top row
+      - Pressing them selects the track
+      - The selected track is highlighted(brighter)
+    - The Pads will show the corresponding Mute/Arm/Solo state in the bottom row
+      - Pressing them will toggle the state
+    - Part + Display Encoder will scroll through the tracks (both rows)
+    - TAP + Display Encoder Button will toggle the Solo/Mute/Arm 
+    - The Bank Button will have the color of the selected state (Mute/Arm/Solo)
+  - With Bank A selected
+    - The Pads will show the default Drum Pads 
+    - Holding the Part Button will show the Session Clip Pads.
+    - Scrolling through the Pads only works with the Display Encoder alone
 
-    - TAP + Context button 0 (The one that switches Track/Device mode) now MUTEs the Current Track
-     
-    - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
-      - You can also Switch the Solo and Arm functionality so that a plain press of the button will solo the track and a press with TAP will arm the track.
-
-    - TAB + PAD Bank A = Mute Tracks
-
-    - TAB + PAD Bank B = Solo Tracks (exclusive Solo)
-  
-    - TAP + METRONOME + PAD Bank B = Solo multiple Tracks 
-
-    - TAP + Main Encoder at any Time shows Mute/Solo Pads as well as Scrolling through Tracks in steps of 4
-    
-- Double Click the Part Button to Lock the Device
-    
-- Part + Main Encoder In Device Mode = Scrolls through the Parameter Banks
-  - Popup shows selected Device and Bank Number and first and last parameter of the bank
-  
-- Part + Main Encoder In Mixer Mode scrolls through the Track Banks
-  - Bank A : Track Selection
-    - They can be clicked to select the track and their color will match the track color.
-    - They scroll up and down 4 tracks per encoder click (you will see what i mean).
-    - Popup shows selected Track Group and first and last track name of the group
-  - Bank B : Track Arming
-    - Similar to the Solo/Mute Pads but for Arming Tracks
-    - They scroll up and down 4 devices per encoder click (you will see what i mean).
-
-  (TAP/Shift can be used as either both, only Shift mode or only TAP mode)
-
-- ### If you have python3 running (should work on windows and mac) :
-  - TAP + Part button Toggles Plugin Window (Wrench Icon) 
+### DEVICES
+  - TAP + Rewind / FastForward = previous/next device in chain
+  - TAP + Main Encoder = Scroll through the device parameter banks (Displays first and last parameter of the bank)
+  - TAP + Double Click Part Button = Lock Device (might be a bit buggy, not sure)  
+  - TAP + Part button Toggles Plugin Window (Wrench Icon)
     - You need to have the windows opened before you can toggle close them (Ctrl + Alt + P)
-  - TAP + Save Saves the current project!!!!!!! (Ctrl + S)
-  
-  - Holding the Loop Button loops the current selection (Ctrl + L)
+    - NEEDS PYTHON3
+
+### CURRENT TRACK CONTROLS
+  - TAP + Context button 0 (The one that switches Track/Device mode) now MUTEs the Current Track
+  - TAP + Context button 1 (The one that Arms the current Track) now SOLOs the Current Track
+    - You can also Switch the Solo and Arm functionality so that a plain press of the button will solo the track and a press with TAP will arm the track. (enabled by default)
+
+
 -------------------------
 
 
