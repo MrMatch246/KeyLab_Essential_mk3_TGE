@@ -63,8 +63,7 @@ def create_mappings(control_surface):
     if PY_SAVE_PROJECT:
         mixer["save_project_button"] = "save_project_button"
 
-    if ENCODER_TRACK_BANK_TAP:
-        mixer["scroll_encoder"] = "display_encoder_tap_shifted"
+    mixer["scroll_encoder"] = "display_encoder_part_shifted"
 
     mappings["Mixer"] = mixer
 
@@ -79,7 +78,6 @@ def create_mappings(control_surface):
                     parameter_controls="continuous_controls",
                     prev_button="previous_device_button",
                     next_button="next_device_button",
-                    part_toggle_button="part_button",
                     wrench_toggle_button="part_button_tap_shifted",
                     ),
         mixer=dict(component="Mixer", volume_controls="faders",
@@ -88,16 +86,8 @@ def create_mappings(control_surface):
                    prehear_volume_control="encoder_9",
                    ))
 
-    if ENCODER_DEVICE_BANK:
-        mappings["Continuous_Control_Modes"]["device"][
-            "bank_scroll_encoder"] = "display_encoder_part_shifted"
 
-    if ENCODER_TRACK_BANK:
-        mappings["Continuous_Control_Modes"]["mixer"][
-            "scroll_encoder"] = "display_encoder_part_shifted"
-    else:
-        mappings["Continuous_Control_Modes"]["mixer"][
-            "part_toggle_button"] = "part_button"
+    mappings["Continuous_Control_Modes"]["device"]["bank_scroll_encoder"] = "display_encoder_tap_shifted"
 
     # mappings["Continuous_Pad_Bank_A_Modes"] = dict(
     #     support_momentary_mode_cycling=True,
@@ -113,7 +103,7 @@ def create_mappings(control_surface):
 
     mappings["Continuous_Pad_Bank_B_Modes"] = dict(
         support_momentary_mode_cycling=False,
-        cycle_mode_button="display_encoder_button_tap_shifted",
+        cycle_mode_button="display_encoder_button_part_shifted",
         default_behaviour=ToggleBehaviour(),
         Mixer_Mute=dict(component="Mixer",
                      track_select_buttons="pad_bank_b_row1",

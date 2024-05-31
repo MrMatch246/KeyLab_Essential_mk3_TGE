@@ -14,7 +14,6 @@ from .Settings import *
 class DeviceControlsComponent(DeviceComponentBase,
                               SimpleDeviceNavigationComponent):
     wrench_toggle_button = ButtonControl()
-    part_toggle_button = ButtonControl()
 
 
     def __init__(self, *a, **k):
@@ -68,13 +67,9 @@ class DeviceControlsComponent(DeviceComponentBase,
     def update(self):
         super().update()
         if self.locked_to_device:
-            self.part_toggle_button.color = "Device.Lock.On"
+            self.wrench_toggle_button.color = "Device.Lock.On"
         else:
-            self.part_toggle_button.color = "Device.Lock.Off"
-
-    def set_part_toggle_button(self, button):
-        self.part_toggle_button.set_control_element(button)
-
+            self.wrench_toggle_button.color = "Device.Lock.Off"
 
 
 class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
@@ -91,6 +86,7 @@ class DeviceBankToggleComponent(DeviceBankNavigationComponent, Renderable):
         if True:
             self._bank_provider.index = 1 if self._bank_provider.index == 0 else 0
             self.has_changed_bank_index = True
+
     @scroll_encoder.value
     def scroll_encoder(self, value, _):
         if self._bank_provider and self._bank_provider.bank_count() > 1:

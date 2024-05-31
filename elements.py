@@ -15,7 +15,6 @@ from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase, MapMode, \
 from ableton.v3.control_surface.elements import CachingSendMessageGenerator, \
     DisplayLineElement, EncoderElement, ButtonMatrixElement
 
-from .Log import log
 from . import midi
 from .Settings import *
 from .display import Line1Text, Line2Text
@@ -108,8 +107,8 @@ class Elements(ElementsBase):
 
         self.add_button(117, "Display_Encoder_Button")
         self.add_modified_control(control=(self.display_encoder_button),
-                                  modifier=(self.tap_button),
-                                  name="display_encoder_button_tap_shifted")
+                                  modifier=(self.part_button),
+                                  name="display_encoder_button_part_shifted")
 
         self.add_encoder(116, "Display_Encoder",
                          map_mode=(MapMode.LinearBinaryOffset))
@@ -122,7 +121,6 @@ class Elements(ElementsBase):
                                   name="display_encoder_tap_shifted")
 
         self.add_button(118, "Bank_Button")
-        # self.add_modifier_button(118, "Bank_Button")
 
         self.add_modified_control(control=(self.bank_button),
                                   modifier=(self.tap_button),
@@ -131,16 +129,9 @@ class Elements(ElementsBase):
         self.add_matrix([[40, 41, 42, 43], [36, 37, 38, 39]], "Pad_Bank_A",
                         element_factory=create_rgb_pad, channels=10)
 
-
-
-
-        self.add_modified_control(control=(self.pad_bank_a),
-                                  modifier=(self.tap_button),
-                                  name="pad_bank_a_shifted")
-
         self.add_modified_control(control=(self.pad_bank_a),
                                   modifier=(self.part_button),
-                                  name="pad_bank_a_part_shifted")
+                                  name="pad_bank_a_shifted")
 
         self.add_matrix([range(44, 52)],
                         "pad_bank_b", element_factory=create_rgb_pad, channels=10)

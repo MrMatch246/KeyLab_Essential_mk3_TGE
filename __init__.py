@@ -16,6 +16,7 @@ from ableton.v3.control_surface import ControlSurface, \
 from ableton.v3.control_surface.capabilities import CONTROLLER_ID_KEY, NOTES_CC, \
     PORTS_KEY, SCRIPT, controller_id, inport, outport
 
+
 from .PythonBridge import KeystrokeProxie, setup_requirements, start_server
 from .Settings import I_HAVE_PYTHON_3, ENABLE_AUTO_ARM
 from .colors import Rgb, Skin
@@ -28,6 +29,7 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
 from .mixer import MixerComponent
 from .transport import TransportComponent
 from .target_track import TargetTrackComponent
+
 
 
 def get_capabilities():
