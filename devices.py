@@ -5,20 +5,20 @@ from ableton.v3.base import listenable_property
 from ableton.v3.live import liveobj_valid
 from ableton.v3.control_surface.components import DeviceBankNavigationComponent
 from ableton.v3.control_surface.components import DeviceComponent as DeviceComponentBase
-from ableton.v3.control_surface.components import SimpleDeviceNavigationComponent
+from ableton.v3.control_surface.components import DeviceNavigationComponent
 from ableton.v3.control_surface.controls import ButtonControl, StepEncoderControl,ToggleButtonControl
 from ableton.v3.control_surface.display import Renderable
 from .PythonBridge import dispatch_hotkey
 from .Settings import *
 #from .Log import log
 class DeviceControlsComponent(DeviceComponentBase,
-                              SimpleDeviceNavigationComponent):
+                              DeviceNavigationComponent):
     wrench_toggle_button = ButtonControl()
 
 
     def __init__(self, *a, **k):
+        self.locked_to_device = False
         super(DeviceControlsComponent, self).__init__(*a, **k)
-        self.locked_to_device= False
         self.locked_device_name = ""
 
     def set_wrench_toggle_button(self, button):
