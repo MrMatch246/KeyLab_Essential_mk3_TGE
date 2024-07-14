@@ -39,6 +39,10 @@ Watch this repo to get notifictions about updates!
 - Enabled Auto Arm
 - TAP + METRONOME = Actual TAP functionality (for setting the tempo)
 - TAP + Save Saves the current project!!!!!!! (Ctrl + S) (needs python3)
+- TAP + LOOP can now force a filesystem update 
+  - When having an external drive or google drive folder in Places and there are external changes to it, the filesystem might not update automatically resulting in you having to manually create a textfile there and deleting it again
+  - This will be done in python now, but you need to specify the correct path in the Settings.py file
+  - PLEASE CONTACT ME IF YOU WANT TO USE THIS FEATURE, I WILL HELP YOU SET IT UP (its easy but not straightforward)
 - Holding the Loop Button loops the current selection (Ctrl + L) (needs python3)
 
 
