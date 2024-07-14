@@ -63,6 +63,9 @@ def create_mappings(control_surface):
     if PY_SAVE_PROJECT:
         mixer["save_project_button"] = "save_project_button"
 
+    if PY_UPDATE_FILESYSTEM:
+        mixer["update_filesystem_button"] = "loop_tap_button"
+
     mixer["scroll_encoder"] = "display_encoder_part_shifted"
 
     mappings["Mixer"] = mixer
@@ -89,16 +92,7 @@ def create_mappings(control_surface):
 
     mappings["Continuous_Control_Modes"]["device"]["bank_scroll_encoder"] = "display_encoder_tap_shifted"
 
-    # mappings["Continuous_Pad_Bank_A_Modes"] = dict(
-    #     support_momentary_mode_cycling=True,
-    #     cycle_mode_button="loop_tap_button",
-    #     default_behaviour=ToggleBehaviour(),
-    #     Session=dict(component="Session",
-    #                  selected_scene_launch_button="display_encoder_button",
-    #                  clip_launch_buttons="pad_bank_a"),
-    #     Drums=dict(component="Drum_Group",
-    #                matrix="pad_bank_a")
-    # )
+
 
 
     mappings["Continuous_Pad_Bank_B_Modes"] = dict(

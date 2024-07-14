@@ -21,6 +21,7 @@ from .Settings import *
 class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
     bank_toggle_button = ButtonControl()
     save_project_button = ButtonControl()
+    update_filesystem_button = ButtonControl()
     scroll_encoder = StepEncoderControl(num_steps=64)
 
 
@@ -86,6 +87,9 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
         self.save_project_button.set_control_element(button)
         self.save_project_button.color = "SaveProject.On"
 
+    def set_update_filesystem_button(self, button):
+        self.update_filesystem_button.set_control_element(button)
+
     @save_project_button.pressed
     def save_project_button(self, _):
         if PY_SAVE_PROJECT:
@@ -93,6 +97,12 @@ class MixerComponent(MixerComponentBase,ScrollComponent,Scrollable):
                 dispatch_hotkey("command+s")
             else:
                 dispatch_hotkey("ctrl+s")
+
+    @update_filesystem_button.pressed
+    def update_filesystem_button(self, _):
+        if PY_UPDATE_FILESYSTEM and PY_UPDATE_FILESYSTEM_PATH:
+            dispatch_hotkey(f";UPDATE_FILESYSTEM;{PY_UPDATE_FILESYSTEM_PATH};")
+
 
     @scroll_encoder.value
     def scroll_encoder(self, value, _):

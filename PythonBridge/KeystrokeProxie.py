@@ -8,10 +8,14 @@ class KeystrokeProxie:
         self.port = port
 
     def send(self, message):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self.host, self.port))  # Connect to receiver
-            s.sendall(message.encode())  # Send the message
-            result = s.recv(1024)  # Receive result
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((self.host, self.port))  # Connect to receiver
+                s.sendall(message.encode())  # Send the message
+                result = s.recv(1024)  # Receive result
+        except Exception as e:
+            print(f"Error: {e}")
+            pass
 
     def shutdown(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

@@ -37,8 +37,30 @@ def handle_connection(conn, addr):
             global shutdown
             shutdown = True
             return
-        pyautogui.hotkey(message.split('+'))
-        conn.sendall("OK".encode())
+        elif message.startswith(";") and message.endswith(";"):
+            #log("Complexe Command")
+            stripped = message[1:-1]
+            #log(stripped)
+            commands = stripped.split(";")
+            if commands[0] == "UPDATE_FILESYSTEM" and len(commands) == 2:
+                try:
+                    temp_path = os.path.join(commands[1],"temp.txt")
+                    with open(temp_path, 'w') as f:
+                        f.write("This is a temporary file. created to force 'Places' update")
+                    os.remove(temp_path)
+                except Exception as e:
+             #       log(f"Error: {e}")
+                    pass
+                conn.sendall("OK".encode())
+                return
+            else:
+                #log("Invalid Command")
+                conn.sendall("ERROR".encode())
+                return
+        else:
+            #log(message)
+            pyautogui.hotkey(message.split('+'))
+            conn.sendall("OK".encode())
 
 
 def main(port):

@@ -45,6 +45,15 @@ PY_TOGGLE_WRENCH = True
 # Save your Project! with the Tap + Save Button!!!
 PY_SAVE_PROJECT = True
 
+# Update the Filesystem/Places with the Tap + Update Button
+# Set it to true and the path to a folder you want to update
+# This is used for situations like a Google Drive folder in places that doesnt
+# trigger an update when changes are synchronized.
+# especially useful if you collaborate, and or drag and drop doesnt work due to
+# Ableton running as Admin
+PY_UPDATE_FILESYSTEM = False
+PY_UPDATE_FILESYSTEM_PATH = None
+
 # If you want to Loop the selected area with the Tap + Loop Button
 PY_ENABLE_LOOP_SELECTION = True
 
