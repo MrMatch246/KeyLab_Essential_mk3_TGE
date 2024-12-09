@@ -29,6 +29,7 @@ from .midi import CONNECTION_MESSAGE, DAW_PROGRAM_BYTE, DISCONNECTION_MESSAGE, \
 from .mixer import MixerComponent
 from .transport import TransportComponent
 from .target_track import TargetTrackComponent
+from .view_control import ViewControlComponent
 
 
 
@@ -63,6 +64,7 @@ class Specification(ControlSurfaceSpecification):
     component_map = {'Device': partial(DeviceControlsComponent, bank_size=16,
                                        bank_navigation_component_type=DeviceBankToggleComponent),
                      'Drum_Group': DrumGroupComponent, 'Mixer': MixerComponent,
+                     'View_Control': ViewControlComponent,
                      'Transport': TransportComponent}
     display_specification = display_specification
 
@@ -91,6 +93,5 @@ class KeyLab_Essential_mk3(ControlSurface):
     def __del__(self):
         if I_HAVE_PYTHON_3:
             KeystrokeProxie().shutdown()
-        super().__del__()
 
 # okay decompiling ./MIDIRemoteScripts/KeyLab_Essential_mk3/__init__.pyc

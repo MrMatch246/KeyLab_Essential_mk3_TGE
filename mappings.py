@@ -44,7 +44,7 @@ def create_mappings(control_surface):
 
     mixer = dict(target_track_arm_button="context_button_1",
                  target_track_volume_control="fader_9",
-                 target_track_pan_control="encoder_9",
+                 target_track_send_a_control="encoder_9",
                  bank_toggle_button="bank_button"
                  )
 
