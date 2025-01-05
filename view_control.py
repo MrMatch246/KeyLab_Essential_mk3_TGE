@@ -52,6 +52,8 @@ class NotifyingViewScroller(Scrollable, EventObject):
             self._view.focus_view("Session")
             self.notify_scrolled()
             self._view.focus_view("Arranger")
+        if action.select(tracks[clamp(new_index, 0, len(tracks) - 1)]):
+            self.notify_scrolled()
 
     def _scroll_scenes(self, delta):
         scenes = list(self.song.scenes)
